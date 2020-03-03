@@ -12,7 +12,6 @@ const CommoditySchema = new Schema({
     },
     describe:{
         type:String,
-        required:true
     },
     category:{
         type:String,

@@ -19,7 +19,11 @@
                     :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
                     style="width: 100%">
-                    <el-table-column align="center" prop="img" width="80" label="商品图片"></el-table-column>
+                    <el-table-column align="center" width="100" label="商品图片">
+                        <template slot-scope="scope">
+                            <img :src="scope.row.img" width="80px" height="80px" alt="">
+                        </template>
+                    </el-table-column>
                     <el-table-column align="center" prop="name" width="150" label="商品名称"></el-table-column>
                     <el-table-column align="center"  prop="describe" label="商品描述"></el-table-column>
                     <el-table-column align="center" prop="category" width="120" label="商品分类"></el-table-column>
@@ -39,7 +43,7 @@
                 </el-table>
             </el-col>
         </el-row>
-        <CommodityDialog :dialog="dialog" :form ="form" @update="loadData" ></CommodityDialog>
+        <CommodityDialog :dialog="dialog" :categoryList="categoryList" :form ="form" @update="loadData" ></CommodityDialog>
     </div>
 </template>
 
@@ -55,22 +59,23 @@ export default {
                 option: 'add'
             },
             form: {
-                id: '',
-                cName: '',
-                no: '',
+                img:'',
+                name:'',
+                describe:'',
+                category:'',
+                price:0,
+                isDiscount:false,
+                onSale:0
             },
             tableData: [],
+            categoryList:[],
             search:''
         }
     },
     methods: {
-        showDiscount(row, column, cellValue, index){
-            console.log(row,column,cellValue,index);
-        },
         loadData () {
             this.$axios.get('/api/commodity/all')
             .then(res => {
-                console.log(res.data);
                 this.tableData = res.data
             })
             .catch(err => console.log(err))
@@ -114,11 +119,16 @@ export default {
                     console.log(err)
                 })
             })
-            .catch(_ => {});
+            .catch(_ => {})
         }
     },
     created () {
         this.loadData()
+        this.$axios.get('/api/category/all')
+            .then(res=>{
+                this.categoryList = res.data
+            })
+            .catch(err=>console.log(err))
     },
     components: {
         CommodityDialog
