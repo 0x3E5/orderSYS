@@ -7,11 +7,9 @@
             <el-col :span="24">
                 <el-table
                     :data="tableData"
-                    border
                     size="medium"
                     :default-sort = "{prop: 'no', order: 'ascending'}"
-                    style="width: 100%"
-                    max-height="250">
+                    style="width: 100%">
                     <el-table-column
                     fixed
                     align="center"
@@ -120,6 +118,7 @@ export default {
     .row-height{
         margin-top: 10px;
         height: calc(100% - 32px);
+        overflow: auto;
     }
     .btn-shadow{
         float: right;

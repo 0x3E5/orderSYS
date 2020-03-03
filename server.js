@@ -7,6 +7,7 @@ const users = require('./routes/api/users');
 const shop = require('./routes/api/shop');
 const init = require('./routes/api/init');
 const category = require('./routes/api/category');
+const commodity = require('./routes/api/commodity');
 
 // 解决参数传递问题
 app.use(express.urlencoded({extended:false}));
@@ -26,6 +27,7 @@ app.use('/api/users',users);
 app.use('/api/shop',shop);
 app.use('/api/init',init);
 app.use('/api/category',category);
+app.use('/api/commodity',commodity);
 
 // 初始化Passport
 app.use(passport.initialize());
