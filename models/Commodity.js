@@ -22,6 +22,10 @@ const CommoditySchema = new Schema({
         type:Number,
         required:true
     },
+    isDiscount:{
+        type:Boolean,
+        required:true
+    },
     onSale:{
         type:Number,
         default:0

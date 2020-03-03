@@ -93,6 +93,14 @@ const routes = [
         component: () => import('../views/admin/Category.vue')
       },
       {
+        path: '/admin/commodity',
+        name: 'Commodity',
+        meta: {
+          title: '商品管理'
+        },
+        component: () => import('../views/admin/Commodity.vue')
+      },
+      {
         path: '/admin/shop',
         name: 'Shop',
         meta: {

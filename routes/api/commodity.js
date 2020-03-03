@@ -11,15 +11,8 @@ const path = require('path');
 // @desc 添加商品信息
 // @access private
 router.post('/add',(req,res)=>{
-    console.log(req.body);
-    const newCommodity = new Commodity({
-        img:req.body.img,
-        name:req.body.name,
-        describe:req.body.describe,
-        category:req.body.category,
-        price:req.body.price,
-        onSale:req.body.onSale
-    })
+    const data = req.body;
+    const newCommodity = new Commodity(data);
     newCommodity.save()
         .then(result=>{
             res.send('商品添加成功！');
@@ -71,7 +64,7 @@ router.post('/upload',passport.authenticate('jwt',{session:false}),(req,res)=>{
     form.parse(req, (err, fields, files) => { 
         fs.rename(files.file.path, path.join(__dirname,'../../public/goods', files.file.name), (err) => { 
             if (err) throw err;
-            let url =`http://${req.headers.host}/shop/${files.file.name}`;
+            let url =`http://${req.headers.host}/goods/${files.file.name}`;
             res.json({status:'ok',url});
         })
     })

@@ -1,7 +1,7 @@
 <template>
     <div id="cmmodity">
         <el-row>
-            <span class="search-tittle">分类搜索：</span>
+            <span class="search-tittle">商品搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-input
                     placeholder="请输入检索内容"
@@ -11,46 +11,40 @@
                 </el-input>
             </el-col>
             
-            <el-button type="primary" size="small" class="btn-shadow" @click="addCategory()">添加分类</el-button>
+            <el-button type="primary" size="small" class="btn-shadow" @click="addCommodity()">添加商品</el-button>
         </el-row>
         <el-row class="row-height">
             <el-col :span="24">
                 <el-table
-                    :data="tableData.filter(data => !search || data.cName.toLowerCase().includes(search.toLowerCase()))"
+                    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
-                    :default-sort = "{prop: 'no', order: 'ascending'}"
                     style="width: 100%">
-                    <el-table-column
-                    fixed
-                    align="center"
-                    prop="cName"
-                    label="分类名称">
+                    <el-table-column align="center" prop="img" width="80" label="商品图片"></el-table-column>
+                    <el-table-column align="center" prop="name" width="150" label="商品名称"></el-table-column>
+                    <el-table-column align="center"  prop="describe" label="商品描述"></el-table-column>
+                    <el-table-column align="center" prop="category" width="120" label="商品分类"></el-table-column>
+                    <el-table-column align="center" prop="price" width="100" label="商品价格"></el-table-column>
+                    <el-table-column align="center" width="100" label="商品打折">
+                        <template slot-scope="scope">
+                            {{ scope.row.isDiscount?'是':'否' }}
+                        </template>
                     </el-table-column>
-                    <el-table-column
-                    fixed
-                    align="center"
-                    prop="no"
-                    sortable
-                    label="分类排序">
-                    </el-table-column>
-                    <el-table-column
-                    fixed="right"
-                    align="center"
-                    label="操作">
+                    <el-table-column align="center" prop="onSale" width="100" label="折前价格"></el-table-column>
+                    <el-table-column fixed="right" align="center" width="120" label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="editCategory(scope.row)">编辑</el-button>
-                        <el-button type="text" size="small" @click="delCategory(scope.row)">删除</el-button>
+                        <el-button type="text" size="small" @click="editCommodity(scope.row)">编辑</el-button>
+                        <el-button type="text" size="small" @click="delCommodity(scope.row)">删除</el-button>
                     </template>
                     </el-table-column>
                 </el-table>
             </el-col>
         </el-row>
-        <CategoryDialog :dialog="dialog" :form ="form" @update="loadData" ></CategoryDialog>
+        <CommodityDialog :dialog="dialog" :form ="form" @update="loadData" ></CommodityDialog>
     </div>
 </template>
 
 <script>
-import CategoryDialog from '@/components/CategoryDialog'
+import CommodityDialog from '@/components/CommodityDialog'
 export default {
     name: 'cmmodity',
     data () {
@@ -70,36 +64,45 @@ export default {
         }
     },
     methods: {
+        showDiscount(row, column, cellValue, index){
+            console.log(row,column,cellValue,index);
+        },
         loadData () {
-            this.$axios.get('/api/category/all')
+            this.$axios.get('/api/commodity/all')
             .then(res => {
+                console.log(res.data);
                 this.tableData = res.data
             })
             .catch(err => console.log(err))
         },
-        addCategory () {
+        addCommodity () {
             this.dialog = {
                 show: true,
-                title: '添加分类',
+                title: '添加商品',
                 option: 'add'
             }
             this.form ={
-                cName:'',
-                no:''
+                img:'',
+                name:'',
+                describe:'',
+                category:'',
+                price:0,
+                isDiscount:false,
+                onSale:0
             }
         },
-        editCategory (row) {
+        editCommodity (row) {
             this.dialog = {
                 show: true,
-                title: '编辑分类',
+                title: '编辑商品',
                 option: 'edit'
             }
             this.form = row
         },
-        delCategory (row) {
-            this.$confirm(`确认删除分类 “${row.cName}” 吗？`)
+        delCommodity (row) {
+            this.$confirm(`确认删除商品 “${row.name}” 吗？`)
             .then(_ => {
-                this.$axios.post('/api/category/del',{_id:row._id})
+                this.$axios.post('/api/commodity/del',{_id:row._id})
                 .then(result=>{
                     this.$message({
                         type:'success',
@@ -118,7 +121,7 @@ export default {
         this.loadData()
     },
     components: {
-        CategoryDialog
+        CommodityDialog
     }
 }
 </script>

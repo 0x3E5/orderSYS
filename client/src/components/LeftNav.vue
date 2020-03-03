@@ -59,7 +59,7 @@ export default {
           {
             icon:"el-icon-box",
             name:"商品管理",
-            path:"/admin/home",
+            path:"/admin/commodity",
             isGroup:false
           },
           {
