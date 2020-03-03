@@ -1,5 +1,5 @@
 <template>
-    <div id="category">
+    <div id="cmmodity">
         <el-row>
             <span class="search-tittle">分类搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
@@ -52,7 +52,7 @@
 <script>
 import CategoryDialog from '@/components/CategoryDialog'
 export default {
-    name: 'category',
+    name: 'cmmodity',
     data () {
         return {
             dialog: {
@@ -123,7 +123,7 @@ export default {
 }
 </script>
 <style scoped>
-    #category{
+    #cmmodity{
         height: 100%;
     }
     .row-height{
