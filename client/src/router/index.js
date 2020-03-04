@@ -101,6 +101,14 @@ const routes = [
         component: () => import('../views/admin/Commodity.vue')
       },
       {
+        path: '/admin/qrcode',
+        name: 'QRcode',
+        meta: {
+          title: '点餐码管理'
+        },
+        component: () => import('../views/admin/QRCode.vue')
+      },
+      {
         path: '/admin/shop',
         name: 'Shop',
         meta: {

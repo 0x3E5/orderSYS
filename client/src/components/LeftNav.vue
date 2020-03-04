@@ -65,7 +65,7 @@ export default {
           {
             icon:"el-icon-mobile",
             name:"点餐码管理",
-            path:"/admin/home",
+            path:"/admin/qrcode",
             isGroup:false
           },
           {
