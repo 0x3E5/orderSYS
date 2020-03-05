@@ -16,7 +16,7 @@
         <el-row class="row-height">
             <el-col :span="24">
                 <el-table
-                    :data="tableData.filter(data => !search || data.no.toLowerCase().includes(search.toLowerCase()))"
+                    :data="tableData.filter(data => !search || data.no.toString().toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
                     :default-sort = "{prop: 'no', order: 'ascending'}"
                     style="width: 100%">
