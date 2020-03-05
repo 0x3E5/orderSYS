@@ -34,22 +34,32 @@
                     label="点单链接">
                     </el-table-column>
                     <el-table-column
+                    fixed
+                    align="center"
+                    label="点餐码">
+                    <template slot-scope="scope">
+                        <el-button primary="success" type="text" @click="qrcode(scope.row)">点击查看点餐码</el-button>
+                    </template>
+                    </el-table-column>
+                    <el-table-column
                     fixed="right"
                     align="center"
                     label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" size="small" @click="delTableNum(scope.row)">删除</el-button>
+                        <el-button type="text" size="medium" @click="delTableNum(scope.row)">删除</el-button>
                     </template>
                     </el-table-column>
                 </el-table>
             </el-col>
         </el-row>
         <TableNumDialog :dialog="dialog" :form ="form" @update="loadData" ></TableNumDialog>
+        <ShowQRCode ref="showQRCode" :qrcodeData ="qrcodeData" ></ShowQRCode>
     </div>
 </template>
 
 <script>
 import TableNumDialog from '../../components/TableNumDialog'
+import ShowQRCode from '../../components/ShowQRCode'
 export default {
     name:'qrCode',
     data(){
@@ -61,6 +71,10 @@ export default {
             form: {
                 url: '',
                 no: '',
+            },
+            qrcodeData:{
+                title:'',
+                visible:false,
             },
             tableData: [],
             search:''
@@ -100,13 +114,21 @@ export default {
                 })
             })
             .catch(_ => {});
+        },
+        qrcode(row){
+            this.qrcodeData={
+                title:row.no,
+                visible:true
+            }
+            this.$refs.showQRCode.drawQRCode(row.url);
         }
     },
     created() {
         this.loadData()
     },
     components:{
-        TableNumDialog
+        TableNumDialog,
+        ShowQRCode
     }
 }
 </script>
