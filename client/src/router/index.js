@@ -127,6 +127,15 @@ const routes = [
     ]
   },
   {
+    path:'/index/:id',
+    name:'UserShop',
+    props:true,
+    meta: {
+      title: '在线点餐'
+    },
+    component: () => import('../views/user/Index.vue')
+  },
+  {
     path: '/*',
     name: 'NotFound',
     meta: {
@@ -153,7 +162,7 @@ function setTitle (to) {
 router.beforeEach((to,from,next)=>{
   setTitle(to)
   const isLogin = localStorage.getItem('orderTk')?true:false;
-  if(to.path=="/login"){
+  if(to.path=="/login" || to.path=="/init" || to.path=="/init/admin" || to.path=="/init/shop" || to.path=="/init/complete" || to.path.startsWith('/index/')){
     next();
   }else{
     isLogin?next():next('/login');
