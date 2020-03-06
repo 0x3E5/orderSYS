@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Commodity = require('../../models/Commodity');
+const Category = require('../../models/Category');
 const passport = require('passport');
 const formidable = require('formidable');
 const fs = require('fs');
@@ -56,6 +57,7 @@ router.get('/all',passport.authenticate('jwt',{session:false}),(req,res)=>{
         .catch(err=>res.status(400).send('获取数据失败，请稍后再试！'))
 })
 
+
 // $route POST api/commodity/upload
 // @desc 上传商品照片，返回json数据
 // @access private
@@ -68,6 +70,30 @@ router.post('/upload',passport.authenticate('jwt',{session:false}),(req,res)=>{
             res.json({status:'ok',url});
         })
     })
+})
+
+// $route get api/commodity/menu
+// @desc 用户页面获取所有商品信息，返回json数据
+// @access public
+router.get('/menu',(req,res)=>{
+    Category.find().sort({no:1})
+        .then(result=>{
+            let menu = [];
+            for(category of result){
+                menu.push({name:category.cName,type:category.no,foods:[]});
+            }
+            Commodity.find()
+                .then(result2=>{
+                    for(category of menu){
+                        for(commodity of result2){
+                            if(category.name === commodity.category){
+                                category.foods.push(commodity);
+                            }
+                        }
+                    }
+                    res.json(menu)
+                })
+        })
 })
 
 module.exports = router;
