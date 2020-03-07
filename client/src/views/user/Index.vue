@@ -1,12 +1,13 @@
 <template>
     <div id="userShop">
         <Header></Header>
-        这是用户商店{{ id }}
+        <Commodities></Commodities>
     </div>
 </template>
 
 <script>
 import Header from '@/components/user/Header'
+import Commodities from '@/components/user/Commodities'
 export default {
     name:'userShop',
     props:['id'],
@@ -19,7 +20,8 @@ export default {
         
     },
     components:{
-        Header
+        Header,
+        Commodities
     }
 }
 </script>

@@ -112,7 +112,6 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        /* margin: 2px 0 8px 0; */
     }
     .content-wrapper > .detail-btn {
         position: absolute;
