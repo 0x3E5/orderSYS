@@ -181,7 +181,8 @@ export default {
         content: ' ';
     }
     #commodities > .goods > .foods-wrapper{
-        flex: 1!important;
+        flex: 1;
+        min-width: 0;
     }
     .goods > .foods-wrapper .title{
         padding-left: 14px;
