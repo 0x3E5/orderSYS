@@ -16,7 +16,7 @@
                     <li v-for="(item,index) in goods" :key='index' class="food-list food-list-hook">
                         <h1 class="title">{{item.name}}</h1>
                         <ul>
-                            <li @click="selectFood(food,$event)" v-for="food in item.foods" :key='food._id' class="food-item border-1px">
+                            <li @click="selectFood(food,$event)" v-for="food in item.foods" :key='food._id' class="food-item">
                                 <div class="icon">
                                     <img width="57" height="57" :src="food.img">
                                 </div>
@@ -221,6 +221,18 @@ export default {
         padding-bottom: 18px;
         position: relative;
     }
+    .goods > .foods-wrapper .food-item::after{
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        border-top: 1px solid rgba(7,17,27,0.1);
+        content: ' ';
+    }
+    .goods > .foods-wrapper .food-item:last-of-type::after{
+        border-top: 0px solid rgba(7,17,27,0.1);
+    }
     .foods-wrapper .food-item > .icon{
         flex: 0 0 57px;
         margin-right: 10px;
@@ -272,14 +284,5 @@ export default {
         bottom: 20px;
         font-size: 14px;
         color: #666;
-    }
-    .border-1px::after{
-        display: block;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        border-top: 1px solid rgba(7,17,27,0.1);
-        content: ' ';
     }
 </style>
