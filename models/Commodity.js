@@ -28,6 +28,10 @@ const CommoditySchema = new Schema({
     onSale:{
         type:Number,
         default:0
+    },
+    soldOut:{
+        type:Boolean,
+        required:true
     }
 });
 

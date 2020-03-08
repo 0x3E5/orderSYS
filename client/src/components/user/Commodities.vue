@@ -160,6 +160,7 @@ export default {
         position: relative;
         z-index: 10;
         margin-top: -1px;
+        color: #000!important;
         background: #fff;
         font-weight: 700;
     }
@@ -167,6 +168,7 @@ export default {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
+        color: #666;
         width: 56px;
         font-size: 12px;
         position: relative;

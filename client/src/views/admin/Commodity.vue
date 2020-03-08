@@ -34,6 +34,11 @@
                         </template>
                     </el-table-column>
                     <el-table-column align="center" prop="onSale" width="100" label="折前价格"></el-table-column>
+                    <el-table-column align="center" width="100" label="售罄情况">
+                        <template slot-scope="scope">
+                            {{ scope.row.soldOut?'是':'否' }}
+                        </template>
+                    </el-table-column>
                     <el-table-column fixed="right" align="center" width="120" label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" size="small" @click="editCommodity(scope.row)">编辑</el-button>
@@ -65,7 +70,8 @@ export default {
                 category:'',
                 price:0,
                 isDiscount:false,
-                onSale:0
+                onSale:0,
+                soldOut:false
             },
             tableData: [],
             categoryList:[],
@@ -93,7 +99,8 @@ export default {
                 category:'',
                 price:0,
                 isDiscount:false,
-                onSale:0
+                onSale:0,
+                soldOut:false
             }
         },
         editCommodity (row) {

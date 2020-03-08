@@ -43,6 +43,12 @@
             <el-form-item label="折前价格" prop="onSale" :label-width="formLabelWidth">
                 <el-input type="number" v-model="form.onSale" autocomplete="off" placeholder="请输入折前价格"></el-input>
             </el-form-item>
+            <el-form-item label="是否售罄"  v-model="form.soldOut" :label-width="formLabelWidth">
+                <el-radio-group v-model="form.soldOut">
+                <el-radio :label="true">是</el-radio>
+                <el-radio :label="false">否</el-radio>
+                </el-radio-group>
+            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
             <el-button class="cancel-shadow" @click="dialog.show = false">取 消</el-button>
