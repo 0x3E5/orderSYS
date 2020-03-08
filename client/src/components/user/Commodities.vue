@@ -26,9 +26,10 @@
                                     <div class="price">
                                         <span class="now">¥{{food.price}}</span><span class="old" v-show="food.isDiscount">¥{{food.onSale}}</span>
                                     </div>
-                                    <div class="cartcontrol-wrapper">
-                                        <!-- <cartcontrol :food="food"></cartcontrol> -->
+                                    <div v-if="!food.soldOut" class="cartcontrol-wrapper">
+                                        <CartControl :food="food"></CartControl>
                                     </div>
+                                    <div v-else class="sold-out">已售罄</div>
                                 </div>
                             </li>
                         </ul>
@@ -36,11 +37,14 @@
                 </ul>
             </div>
         </div>
+        <ShopCart ref="shopcart" :selectFoods="selectFoods" ></ShopCart>
     </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import ShopCart from '@/components/user/ShopCart'
+import CartControl from '@/components/user/CartControl';
 export default {
     name:'commoditiesList',
     data(){
@@ -104,6 +108,17 @@ export default {
             }
             return 0;
         },
+        selectFoods() {
+            let foods = [];
+            this.goods.forEach((good) => {
+                good.foods.forEach((food) => {
+                    if (food.count) {
+                        foods.push(food);
+                    }
+                });
+            });
+            return foods;
+        }
     },
     created() {
         this.$axios.get('/api/commodity/menu')
@@ -116,6 +131,10 @@ export default {
             })
             .catch(err => console.log(err))
     },
+    components:{
+        ShopCart,
+        CartControl
+    }
 }
 </script>
 
@@ -246,6 +265,13 @@ export default {
         position: absolute;
         right: 0px;
         bottom: 12px;
+    }
+    .food-item > .contents > .sold-out{
+        position: absolute;
+        right: 0px;
+        bottom: 20px;
+        font-size: 14px;
+        color: #666;
     }
     .border-1px::after{
         display: block;

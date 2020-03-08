@@ -2,6 +2,7 @@
     <div id="userShop">
         <Header></Header>
         <Commodities></Commodities>
+        <ShopCart></ShopCart>
     </div>
 </template>
 
@@ -21,7 +22,7 @@ export default {
     },
     components:{
         Header,
-        Commodities
+        Commodities,
     }
 }
 </script>
