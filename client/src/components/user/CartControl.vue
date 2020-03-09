@@ -10,7 +10,6 @@
     </div>
 </template>
 <script>
-import Vue from 'vue';
 export default {
     props: {
         food: {
@@ -23,11 +22,10 @@ export default {
                 return;
             }
             if (!this.food.count) {
-                Vue.set(this.food, 'count', 1);
+                this.$set(this.food, 'count', 1);
             } else {
                 this.food.count++;
             }
-            this.$root.eventHub.$emit('cart.add', event.target);
         },
         decreaseCart(event) {
             if (!event._constructed) {

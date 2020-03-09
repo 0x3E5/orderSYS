@@ -10,21 +10,11 @@
                         <div class="num" v-show="totalCount>0">{{totalCount}}</div>
                     </div>
                     <div class="price">¥{{totalPrice}}元</div>
-                    <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
                 </div>
                 <div class="content-right" @click.stop.prevent="pay">
                     <div class="pay" :class="payClass">
-                        {{payDesc}}
+                        确认下单
                     </div>
-                </div>
-            </div>
-            <div class="ball-container">
-                <div v-for="(ball,index) in balls" :key="index">
-                    <transition name="drop" @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
-                        <div v-show="ball.show" class="ball">
-                            <div class="inner inner-hook"></div>
-                        </div>
-                    </transition>
                 </div>
             </div>
             <transition name="fold">
@@ -65,36 +55,19 @@ export default {
             type: Array,
             default () {
                 return [{
-                    price: 30,
-                    count: 1
+                    price: 0,
+                    count: 0
                 }];
             }
         },
-        deliveryPrice: {
-            type: Number,
-            default: 4
-        },
-        minPrice: {
-            type: Number,
-            default: 10
+        id:{
+            type:String
         }
     },
     data() {
         return {
-            balls: [{
-                show: false
-            }, {
-                show: false
-            }, {
-                show: false
-            }, {
-                show: false
-            }, {
-                show: false
-            }],
-            dropBalls: [],
             fold: true
-        };
+        }
     },
     computed: {
         totalPrice() {
@@ -111,18 +84,8 @@ export default {
             });
             return count;
         },
-        payDesc() {
-            if (this.totalPrice === 0) {
-                return `¥${this.minPrice}元起送`;
-            } else if (this.totalPrice < this.minPrice) {
-                let diff = this.minPrice - this.totalPrice;
-                return `还差¥${diff}元起送`;
-            } else {
-                return '去结算';
-            }
-        },
         payClass() {
-            if (this.totalPrice < this.minPrice) {
+            if (this.totalPrice <= 0) {
                 return 'not-enough';
             } else {
                 return 'enough';
@@ -149,17 +112,6 @@ export default {
         }
     },
     methods: {
-        drop(el) {
-            for (let i = 0; i < this.balls.length; i++) {
-                let ball = this.balls[i];
-                if (!ball.show) {
-                    ball.show = true;
-                    ball.el = el;
-                    this.dropBalls.push(ball);
-                    return;
-                }
-            }
-        },
         toggleList() {
             if (!this.totalCount) {
                 return;
@@ -169,52 +121,17 @@ export default {
         empty() {
             this.selectFoods.forEach((food) => {
                 food.count = 0;
-            });
+            })
         },
         pay() {
-            if (this.totalPrice < this.minPrice) {
+            if (this.totalPrice <= 0) {
                 return;
             }
             window.alert('支付' + this.totalPrice + '元');
+            console.log({deskNo:this.id,totalPrice:this.totalPrice,order:this.selectFoods});
         },
         hideList() {
             this.fold = true;
-        },
-        beforeEnter(el) {
-            let count = this.balls.length;
-            while (count--) {
-                let ball = this.balls[count];
-                if (ball.show) {
-                    let rect = ball.el.getBoundingClientRect();
-                    let x = rect.left - 32;
-                    let y = -(window.innerHeight - rect.top - 22);
-                    el.style.display = '';
-                    el.style.webkitTransform = `translate3d(0,${y}px,0)`;
-                    el.style.tranform = `translate3d(0,${y}px,0)`;
-                    let inner = el.getElementsByClassName('inner-hook')[0];
-                    inner.style.webkitTransform = `translate3d(${x}px,0,0)`;
-                    inner.style.tranform = `translate3d(${x}px,0,0)`;
-                }
-            }
-        },
-        enter(el) {
-            // 触发浏览器重绘
-            /* eslint-disable no-unused-vars */
-            let rf = el.offsetHeight;
-            this.$nextTick(() => {
-                el.style.webkitTransform = 'translate3d(0,0,0)';
-                el.style.tranform = 'translate3d(0,0,0)';
-                let inner = el.getElementsByClassName('inner-hook')[0];
-                inner.style.webkitTransform = 'translate3d(0,0,0)';
-                inner.style.tranform = 'translate3d(0,0,0)';
-            });
-        },
-        afterEnter(el) {
-            let ball = this.dropBalls.shift();
-            if (ball) {
-                ball.show = false;
-                el.style.display = 'none';
-            }
         }
     },
     components: {
@@ -294,7 +211,6 @@ export default {
         line-height: 24px;
         padding-right: 12px;
         box-sizing: border-box;
-        border-right: 1px solid rgba(255,255,255,0.1);
         font-size: 16px;
         font-weight: 700;
     }

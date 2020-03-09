@@ -1,52 +1,57 @@
 <template>
-    <div id="commodities">
-        <div class="tab-title">商品列表</div>
-        <div class="goods">
-            <div class="menu-wrapper" ref="menuWrapper">
-                <ul>
-                    <li v-for="(item,index) in goods" :key='index' :class="{'menu-item':true,'current':currentIndex === index}" @click="selectMenu(index,$event)" ref="menuList">
-                        <span class="text border-1px">
-                            {{item.name}}
-                        </span>
-                    </li>
-                </ul>
-            </div>
-            <div class="foods-wrapper" ref="foodsWrapper">
-                <ul>
-                    <li v-for="(item,index) in goods" :key='index' class="food-list food-list-hook">
-                        <h1 class="title">{{item.name}}</h1>
-                        <ul>
-                            <li @click="selectFood(food,$event)" v-for="food in item.foods" :key='food._id' class="food-item">
-                                <div class="icon">
-                                    <img width="57" height="57" :src="food.img">
-                                </div>
-                                <div class="contents">
-                                    <h2 class="name">{{food.name}}</h2>
-                                    <div class="desc">{{food.describe}}</div>
-                                    <div class="price">
-                                        <span class="now">¥{{food.price}}</span><span class="old" v-show="food.isDiscount">¥{{food.onSale}}</span>
+    <div>
+        <div id="commodities">
+            <div class="tab-title">商品列表</div>
+            <div class="goods">
+                <div class="menu-wrapper" ref="menuWrapper">
+                    <ul>
+                        <li v-for="(item,index) in goods" :key='index' :class="{'menu-item':true,'current':currentIndex === index}" @click="selectMenu(index,$event)" ref="menuList">
+                            <span class="text border-1px">
+                                {{item.name}}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="foods-wrapper" ref="foodsWrapper">
+                    <ul>
+                        <li v-for="(item,index) in goods" :key='index' class="food-list food-list-hook">
+                            <h1 class="title">{{item.name}}</h1>
+                            <ul>
+                                <li @click="selectFood(food,$event)" v-for="food in item.foods" :key='food._id' class="food-item">
+                                    <div class="icon">
+                                        <img width="57" height="57" :src="food.img">
                                     </div>
-                                    <div v-if="!food.soldOut" class="cartcontrol-wrapper">
-                                        <CartControl :food="food"></CartControl>
+                                    <div class="contents">
+                                        <h2 class="name">{{food.name}}</h2>
+                                        <div class="desc">{{food.describe}}</div>
+                                        <div class="price">
+                                            <span class="now">¥{{food.price}}</span><span class="old" v-show="food.isDiscount">¥{{food.onSale}}</span>
+                                        </div>
+                                        <div v-if="!food.soldOut" class="cartcontrol-wrapper">
+                                            <CartControl :food="food"></CartControl>
+                                        </div>
+                                        <div v-else class="sold-out">已售罄</div>
                                     </div>
-                                    <div v-else class="sold-out">已售罄</div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <ShopCart ref="shopcart" :selectFoods="selectFoods" :id="id"></ShopCart>
         </div>
-        <ShopCart ref="shopcart" :selectFoods="selectFoods" ></ShopCart>
+        <CommodityDetail ref="detail" :food="selectedFood"></CommodityDetail>
     </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import ShopCart from '@/components/user/ShopCart'
-import CartControl from '@/components/user/CartControl';
+import CartControl from '@/components/user/CartControl'
+import CommodityDetail from '@/components/user/CommodityDetail'
 export default {
     name:'commoditiesList',
+    props:['id'],
     data(){
         return {
             goods:[],
@@ -65,6 +70,13 @@ export default {
             let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
             let el = foodList[index];
             this.foodScroll.scrollToElement(el, 300);
+        },
+        selectFood(food, event) {
+            if (!event._constructed) {
+                return;
+            }
+            this.selectedFood = food;
+            this.$refs.detail.show();
         },
         _initScroll() {
             this.meunScroll = new BScroll(this.$refs.menuWrapper, {
@@ -133,7 +145,8 @@ export default {
     },
     components:{
         ShopCart,
-        CartControl
+        CartControl,
+        CommodityDetail
     }
 }
 </script>
@@ -239,6 +252,7 @@ export default {
     }
     .foods-wrapper .food-item > .contents{
         flex: 1;
+        min-width: 0;
     }
 
     .food-item > .contents > .name{
@@ -252,7 +266,6 @@ export default {
     .food-item > .contents > .desc{
         line-height: 12px;
         margin-bottom: 8px;
-        width: 60%;
         font-size: 10px;
         color: #93999f;
         white-space: nowrap;

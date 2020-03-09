@@ -1,8 +1,7 @@
 <template>
     <div id="userShop">
         <Header></Header>
-        <Commodities></Commodities>
-        <ShopCart></ShopCart>
+        <Commodities :id="id"></Commodities>
     </div>
 </template>
 
