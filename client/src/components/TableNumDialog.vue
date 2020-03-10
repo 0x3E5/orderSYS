@@ -42,7 +42,7 @@ export default {
             this.$refs[formName].validate(valid => {
                 if(valid){
                     let formData = {
-                        url: `${this.form.url}/${this.form.no}`,
+                        url: `${this.form.url}/index/${this.form.no}`,
                         no:this.form.no
                     }
                     this.$axios.post('/api/qrcode/add',formData)

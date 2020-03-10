@@ -73,8 +73,11 @@ export default {
         totalPrice() {
             let total = 0;
             this.selectFoods.forEach((food) => {
-                total += food.price * food.count;
+                total += food.price * food.count 
+                // console.log(food.price+' * '+food.count+'='+food.price * food.count);
             });
+            total = Math.round(total * 100) / 100
+            console.log(total);
             return total;
         },
         totalCount() {
