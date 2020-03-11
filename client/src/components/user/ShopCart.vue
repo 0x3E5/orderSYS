@@ -42,12 +42,14 @@
         <transition name="fade">
             <div class="list-mask" v-show="listShow" @click="hideList"></div>
         </transition>
+        <Confirm ref="confirm" @clear="empty" :orderData="orderData" ></Confirm>
     </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll';
-import CartControl from '@/components/user/CartControl';
+import BScroll from 'better-scroll'
+import CartControl from '@/components/user/CartControl'
+import Confirm from '@/components/user/Confirm'
 export default {
     name:'shopCart',
     props: {
@@ -66,7 +68,9 @@ export default {
     },
     data() {
         return {
-            fold: true
+            fold: true,
+            showConfirm:false,
+            orderData:{}
         }
     },
     computed: {
@@ -128,15 +132,16 @@ export default {
             if (this.totalPrice <= 0) {
                 return;
             }
-            window.alert('支付' + this.totalPrice + '元');
-            console.log({deskNo:this.id,totalPrice:this.totalPrice,order:this.selectFoods});
+            this.orderData = {deskNo:this.id,totalPrice:this.totalPrice,order:this.selectFoods}
+            this.$refs.confirm.show()
         },
         hideList() {
             this.fold = true;
         }
     },
     components: {
-        CartControl
+        CartControl,
+        Confirm
     }
 }
 </script>

@@ -38,7 +38,7 @@
                     </ul>
                 </div>
             </div>
-            <ShopCart ref="shopcart" :selectFoods="selectFoods" :id="id"></ShopCart>
+            <ShopCart ref="shopcart" :selectFoods="selectFoods" :showConfirm="showConfirm" :id="id"></ShopCart>
         </div>
         <CommodityDetail ref="detail" :food="selectedFood"></CommodityDetail>
     </div>
@@ -58,7 +58,8 @@ export default {
             listHeight:[],
             scrollY: 0,
             drop: [],
-            selectedFood: {}
+            selectedFood: {},
+            showConfirm:false,
         }
     },
     methods: {
