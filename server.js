@@ -9,6 +9,8 @@ const init = require('./routes/api/init');
 const category = require('./routes/api/category');
 const commodity = require('./routes/api/commodity');
 const qrCode = require('./routes/api/qrCode');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 // 解决参数传递问题
 app.use(express.urlencoded({extended:false}));
@@ -35,7 +37,30 @@ app.use('/api/qrcode',qrCode);
 app.use(passport.initialize());
 require('./config/passport')(passport);
 
-app.listen(3000,()=>{
+// 监听Socket事件
+if(io){
+    console.log('[Log] WebSocket Service is active. ');
+
+    io.on('connection', function(socket){
+        console.log('a user connected');
+    
+        socket.on("disconnect", function() {
+            console.log("a user go out");
+        });
+    
+        socket.on("message", function(obj) {
+            //延迟3s返回信息给客户端
+            setTimeout(function(){
+                console.log('the websokcet message is'+obj);
+                io.emit("message", obj);
+            },3000);
+        });
+    })
+}else{
+    console.log('[Err] WeSocket Service is not active.');
+}
+
+const server = http.listen(3000,()=>{
     console.log('[Log] Server is running ...');
     console.log('[Log] Url:http://127.0.0.1:3000');
 })
