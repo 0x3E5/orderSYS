@@ -22,46 +22,66 @@
                         </ul>
                     </el-form-item>
                     <el-form-item label="订单备注">
-                        <span>{{ props.row.remark }}</span>
+                        <span>{{ props.row.remark ===''?'无':props.row.remark }}</span>
                     </el-form-item>
                     <el-form-item label="订单金额">
-                        <span>￥{{ props.row.totalPrice }}</span>
+                        <span class="totalPrice">￥{{ props.row.totalPrice }}</span>
+                    </el-form-item>
+                    <el-form-item label="下单时间">
+                        <span>{{ props.row.date | formatDate }}</span>
                     </el-form-item>
                     </el-form>
                 </template>
                 </el-table-column>
                 <el-table-column
                 label="订单桌号"
+                width="100"
+                align="center"
                 prop="deskNo">
                 </el-table-column>
                 <el-table-column
+                align="center"
                 label="订单内容">
                 <template slot-scope="scope">
-                    {{ scope.row.order[0].name+'...' }}
+                    <span class="ellipsis">{{ scope.row.order | orderList }}</span>
                 </template>
                 </el-table-column>
                 <el-table-column
+                align="center"
                 label="订单备注">
                 <template slot-scope="scope">
-                    {{ scope.row.remark===''?"无":scope.row.remark }}
+                    <span class="ellipsis">{{ scope.row.remark===''?"无":scope.row.remark }}</span>
                 </template>
                 </el-table-column>
                 <el-table-column
+                align="center"
+                width="100"
                 label="订单金额">
                 <template slot-scope="scope">
-                    ￥{{ scope.row.totalPrice }}
+                    <span class="totalPrice">￥{{ scope.row.totalPrice }}</span>
                 </template>
                 </el-table-column>
                 <el-table-column
+                align="center"
+                fixed="right"
+                width="100"
                 label="订单状态">
-                    <template slot-scope="scope">
-                        {{ scope.row.state===0?"待处理":"已完成" }}
+                    <template slot-scope="scope">    
+                        <el-tag
+                        :type="scope.row.state === 0 ? 'primary' : 'success'"
+                        disable-transitions>
+                            {{ scope.row.state===0?"待处理":"已完成" }}
+                        </el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column
+                align="center"
+                fixed="right"
+                width="160"
                 label="订单操作">
                     <template>
-                        完成|取消                  
+                        <el-button size="mini" type="success">完成</el-button>
+                        <el-button size="mini" type="warning">取消</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -91,6 +111,22 @@ export default {
                 console.log(err)
             })
     },
+    filters:{
+        orderList(order){
+            let orderData = ''
+            order.forEach(el=>{
+                console.log(el);
+                orderData+=`${el.name}x${el.count} `
+            })
+            console.log(orderData);
+            return orderData
+        },
+        formatDate(time){
+            let date = new Date(time)
+            let date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+            return date_value
+        }
+    }
 }
 </script>
 
@@ -122,7 +158,12 @@ export default {
     .demo-table-expand .el-form-item .el-form-item__content ul li span:first-child{
         flex: 4;
     }
-    .demo-table-expand .el-form-item:last-child .el-form-item__content span{
+    .totalPrice{
         color: red;
+    }
+    .ellipsis{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>

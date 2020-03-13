@@ -51,7 +51,7 @@ export default {
             isGroup:false
           },
           {
-            icon:"el-icon-document",
+            icon:"el-icon-takeaway-box",
             name:"历史订单",
             path:"/admin/history",
             isGroup:false
