@@ -52,12 +52,19 @@ export default {
         submitOrder(){
             this.orderData.remark = this.remark
             console.log(this.orderData)
-            this.showConfirm = false
-            this.$emit('clear')
-            this.$message({
-                type:'success',
-                message:'下单成功店家正在处理您的订单请耐心等待...'
-            })
+            this.$axios.post('/api/order/submit',this.orderData)
+                .then(res=>{
+                    this.showConfirm = false
+                    // this.$emit('clear')
+                    this.$message({
+                        type:'success',
+                        message:'下单成功店家正在处理您的订单请耐心等待...'
+                    })
+                })
+                .catch(err=>{
+
+                })
+
         }
     },
 }

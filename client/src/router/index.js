@@ -85,6 +85,22 @@ const routes = [
         component: () => import('../views/admin/Home.vue')
       },
       {
+        path: '/admin/order',
+        name: 'Order',
+        meta: {
+          title: '订单管理'
+        },
+        component: () => import('../views/admin/Order.vue')
+      },
+      {
+        path: '/admin/history',
+        name: 'History',
+        meta: {
+          title: '历史订单'
+        },
+        component: () => import('../views/admin/History.vue')
+      },
+      {
         path: '/admin/category',
         name: 'Category',
         meta: {

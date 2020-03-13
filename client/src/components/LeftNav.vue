@@ -47,7 +47,13 @@ export default {
           {
             icon:"el-icon-document",
             name:"订单管理",
-            path:"/admin/home",
+            path:"/admin/order",
+            isGroup:false
+          },
+          {
+            icon:"el-icon-document",
+            name:"历史订单",
+            path:"/admin/history",
             isGroup:false
           },
           {

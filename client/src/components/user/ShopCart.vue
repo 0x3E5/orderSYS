@@ -132,7 +132,7 @@ export default {
             if (this.totalPrice <= 0) {
                 return;
             }
-            this.orderData = {deskNo:this.id,totalPrice:this.totalPrice,order:this.selectFoods}
+            this.orderData = {deskNo:parseInt(this.id),totalPrice:this.totalPrice,order:this.selectFoods}
             this.$refs.confirm.show()
         },
         hideList() {
