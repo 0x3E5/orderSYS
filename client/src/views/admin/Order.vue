@@ -83,7 +83,7 @@
                         <el-button size="mini" type="success" @click="finish(scope.row)">完成</el-button>&nbsp;
                         <el-popconfirm
                         title="确定要取消当前订单吗？"
-                        @onConfirm="del(scope.row)"
+                        @onConfirm="cancel(scope.row)"
                         >
                         <el-button slot="reference" size="mini" type="warning">取消</el-button>
                         </el-popconfirm>
@@ -118,7 +118,7 @@ export default {
                     console.log(err)
                 })
         },
-        del(data){
+        cancel(data){
             this.$axios.post('/api/order/cancel',{_id:data._id})
                 .then(res=>{
                     this.$message({

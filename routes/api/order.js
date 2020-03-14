@@ -33,6 +33,19 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
         })
 })
 
+// $route GET api/order/finished
+// @desc 查询已完成订单信息，返回json数据
+// @access private
+router.get('/finished',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    Order.find({state:1})
+        .then(result=>{
+            res.send(result)
+        })
+        .catch(err=>{
+            res.status(400).send('查询失败，请重试！')
+        })
+})
+
 // $route POST api/order/finish
 // @desc 提交已完成订单信息，返回json数据
 // @access private
@@ -46,7 +59,7 @@ router.post('/finish',passport.authenticate('jwt',{session:false}),(req,res)=>{
 })
 
 // $route POST api/order/cancel
-// @desc 提交已完成订单信息，返回json数据
+// @desc 删除/取消订单信息，返回json数据
 // @access private
 router.post('/cancel',passport.authenticate('jwt',{session:false}),(req,res)=>{
     let _id = req.body._id
