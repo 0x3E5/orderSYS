@@ -34,8 +34,15 @@
                 </template>
                 </el-table-column>
                 <el-table-column
+                label="订单编号"
+                fixed="left"
+                width="170"
+                align="center"
+                prop="orderNo">
+                </el-table-column>
+                <el-table-column
                 label="订单桌号"
-                width="100"
+                width="80"
                 align="center"
                 prop="deskNo">
                 </el-table-column>
@@ -56,6 +63,7 @@
                 <el-table-column
                 align="center"
                 width="100"
+                fixed="right"
                 label="订单金额">
                 <template slot-scope="scope">
                     <span class="totalPrice">￥{{ scope.row.totalPrice }}</span>
@@ -64,7 +72,7 @@
                 <el-table-column
                 align="center"
                 fixed="right"
-                width="100"
+                width="80"
                 label="订单状态">
                     <template slot-scope="scope">    
                         <el-tag
@@ -77,14 +85,14 @@
                 <el-table-column
                 align="center"
                 fixed="right"
-                width="100"
+                width="80"
                 label="订单操作">
                     <template slot-scope="scope">
                         <el-popconfirm
                         title="确定要删除当前订单吗？"
                         @onConfirm="del(scope.row)"
                         >
-                        <el-button slot="reference" size="mini" type="danger">取消</el-button>
+                        <el-button slot="reference" size="mini" type="danger">删除</el-button>
                         </el-popconfirm>
                     </template>
                 </el-table-column>
@@ -109,7 +117,7 @@ export default {
                 .then(res=>{
                     this.$message({
                         type:'success',
-                        message:'订单已取消！'
+                        message:'订单已删除！'
                     })
                     this.initTableData()
                 })
@@ -118,7 +126,7 @@ export default {
                 })
         },
         initTableData(){
-            this.$axios.get('/api/order/unfinished')
+            this.$axios.get('/api/order/finished')
             .then(res=>{
                 this.tableData = res.data
             })
