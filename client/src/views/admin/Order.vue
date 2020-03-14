@@ -79,9 +79,14 @@
                 fixed="right"
                 width="160"
                 label="订单操作">
-                    <template>
-                        <el-button size="mini" type="success">完成</el-button>
-                        <el-button size="mini" type="warning">取消</el-button>
+                    <template slot-scope="scope">
+                        <el-button size="mini" type="success" @click="finish(scope.row)">完成</el-button>&nbsp;
+                        <el-popconfirm
+                        title="确定要取消当前订单吗？"
+                        @onConfirm="del(scope.row)"
+                        >
+                        <el-button slot="reference" size="mini" type="warning">取消</el-button>
+                        </el-popconfirm>
                     </template>
                 </el-table-column>
             </el-table>
@@ -100,25 +105,51 @@ export default {
         }
     },
     methods:{
-
-    },
-    mounted() {
-        this.$axios.get('/api/order/unfinished')
+        finish(data){
+            this.$axios.post('/api/order/finish',{_id:data._id})
+                .then(res=>{
+                    this.$message({
+                        type:'success',
+                        message:'订单已完成！'
+                    })
+                    this.initTableData()
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+        },
+        del(data){
+            this.$axios.post('/api/order/cancel',{_id:data._id})
+                .then(res=>{
+                    this.$message({
+                        type:'success',
+                        message:'订单已取消！'
+                    })
+                    this.initTableData()
+                })
+                .catch(err=>{
+                    console.log(err)
+                })
+        },
+        initTableData(){
+            this.$axios.get('/api/order/unfinished')
             .then(res=>{
                 this.tableData = res.data
             })
             .catch(err=>{
                 console.log(err)
             })
+        }
+    },
+    mounted() {
+        this.initTableData()
     },
     filters:{
         orderList(order){
             let orderData = ''
             order.forEach(el=>{
-                console.log(el);
                 orderData+=`${el.name}x${el.count} `
             })
-            console.log(orderData);
             return orderData
         },
         formatDate(time){

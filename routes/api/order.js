@@ -33,4 +33,28 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
         })
 })
 
+// $route POST api/order/finish
+// @desc 提交已完成订单信息，返回json数据
+// @access private
+router.post('/finish',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    let _id = req.body._id
+    Order.findOneAndUpdate({_id},{$set:{state:1}},{new:true})
+        .then(result=>{
+            res.send('订单已完成！');
+        })
+        .catch(err=>res.status(400).send('订单操作失败，请重试！'))
+})
+
+// $route POST api/order/cancel
+// @desc 提交已完成订单信息，返回json数据
+// @access private
+router.post('/cancel',passport.authenticate('jwt',{session:false}),(req,res)=>{
+    let _id = req.body._id
+    Order.findOneAndRemove({_id},{new:true})
+        .then(result=>{
+            res.send('订单已取消！');
+        })
+        .catch(err=>res.status(400).send('订单操作失败，请重试！'))
+})
+
 module.exports = router; 
