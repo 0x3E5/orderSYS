@@ -35,7 +35,6 @@
                 </el-table-column>
                 <el-table-column
                 label="订单编号"
-                fixed="left"
                 width="170"
                 align="center"
                 prop="orderNo">

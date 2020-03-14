@@ -35,7 +35,7 @@
                 </el-table-column>
                 <el-table-column
                 label="订单桌号"
-                width="100"
+                width="80"
                 align="center"
                 prop="deskNo">
                 </el-table-column>
@@ -64,7 +64,7 @@
                 <el-table-column
                 align="center"
                 fixed="right"
-                width="100"
+                width="80"
                 label="订单状态">
                     <template slot-scope="scope">    
                         <el-tag
