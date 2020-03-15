@@ -53,10 +53,11 @@
                 </template>
                 </el-table-column>
                 <el-table-column
+                width="150"
                 align="center"
-                label="订单备注">
+                label="下单时间">
                 <template slot-scope="scope">
-                    <span class="ellipsis">{{ scope.row.remark===''?"无":scope.row.remark }}</span>
+                    {{ scope.row.date | formatDate }}
                 </template>
                 </el-table-column>
                 <el-table-column

@@ -10,7 +10,9 @@ socketio.getSocketIO = (serve)=>{
         console.log('[Log] WebSocket service is active.');
     }
     io.sockets.on('connection', function (socket) {  
+        console.log('客户端连接了');
         socket.on('submitOrder',function(){  
+            console.log('触发了submitOrder方法');
             socket.broadcast.emit('checkOrder');  
         })  
     })

@@ -26,6 +26,8 @@ export default {
   },
   methods: {
   },
+  mounted() {
+  },
   components: {
     TopNav,
     LeftNav
