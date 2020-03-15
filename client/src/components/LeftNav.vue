@@ -3,7 +3,7 @@
         <el-col :span="24">
             <h5 class="leftLogo">在线点餐系统</h5>
             <el-menu
-            default-active="/admin/home"
+            :default-active="active"
             background-color="#304156"
             text-color="#fff"
             active-text-color="#409EFF">
@@ -86,7 +86,15 @@ export default {
           }
         ]
       }
-    }
+    },
+    computed: {
+      active(){
+        if(location.pathname==='/admin'){
+          return '/admin/home'
+        }
+        return location.pathname
+      }
+    },
 }
 </script>
 

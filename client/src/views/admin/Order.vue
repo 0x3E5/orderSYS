@@ -143,14 +143,9 @@ export default {
     },
     mounted() {
         this.initTableData()
-        // this.$socket.on('checkOrder',()=>{
-        //     console.log('socket触发了');
-        //     this.initTableData()
-        // })
     },
     sockets:{
         checkOrder(){
-            console.log('socket触发了');
             this.initTableData()
         }
     },

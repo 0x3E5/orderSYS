@@ -10,7 +10,7 @@
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="card-bg card-2">
                     <h3 class="card-title">今日收入</h3>
-                    <span class="card-data">0</span>
+                    <span class="card-data">￥0</span>
                 </div>
             </el-col>
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
@@ -43,10 +43,31 @@ export default {
         padding: 5px;
     }
     .home-card > .card-bg{
+        overflow: hidden;
         position: relative;
         width: 100%;
-        height: 100px;
+        height: 140px;
         border-radius: 10px;
+    }
+    .home-card > .card-bg::after{
+        content: '';
+        width: 300px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .2);
+        position: absolute;
+        top: 66%;
+        right: 32%;
+    }
+    .home-card > .card-bg::before{
+        content: '';
+        width: 400px;
+        height: 100px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .1);
+        position: absolute;
+        top: 72%;
+        left: 24%;
     }
     .card-1{
         background-image: linear-gradient(230deg, #759bff, #843cf6);
@@ -61,12 +82,12 @@ export default {
         background-image: linear-gradient(230deg, #0e4cfd, #6a8eff);
     }
     .home-card > .card-bg > .card-title{
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 500;
         color: #fff;
         position: absolute;
-        top: 8px;
-        left: 10px;
+        top: 12px;
+        left: 12px;
     }
     .home-card > .card-bg > .card-data{
         position: absolute;
@@ -74,7 +95,7 @@ export default {
         left: 50%;
         transform: translate(-50%,-50%);
         color: #fff;
-        font-size: 30px;
+        font-size: 35px;
         font-weight: bold;
     }
 </style>
