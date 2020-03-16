@@ -5,6 +5,10 @@ import router from './router'
 import store from './store'
 import './plugins/element.js'
 import VueSocketIO from 'vue-socket.io'
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/component/tooltip'
+Vue.component('chart', ECharts)
 
 Vue.use(new VueSocketIO({
   debug:true,

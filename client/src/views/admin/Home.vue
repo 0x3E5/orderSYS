@@ -26,12 +26,90 @@
                 </div>
             </el-col>
         </el-row>
+        <el-row>
+            <el-col :span="24">
+                <chart ref="chart" :options="chartData" :auto-resize="true"></chart>
+            </el-col>
+        </el-row>
+        
     </div>
 </template>
 
 <script>
+import echarts from 'echarts'
 export default {
-    name:'home'
+    name:'home',
+    data(){
+        return {
+            chartData: {}
+        }
+    },
+    mounted() {
+        this.chartData = {
+            xAxis: {
+                type: 'category',
+                lineStyle: {
+                    color: '#004E52',
+                    opacity: 0.5,
+                    width: 2
+                },
+                data: ['2020-03-10', '2020-03-11', '2020-03-12', '2020-03-13', '2020-03-14', '2020-03-15', '2020-03-16'],
+                splitLine: {
+                show: false
+                }
+            },
+            yAxis: {
+                type: 'value',
+                inside:true
+            },
+            series: [
+                {
+                    name: '模拟数据',
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    sampling: 'average',
+                    itemStyle: {
+                        color: '#8ec6ad'
+                    },
+                    stack: 'a',
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#8ec6ad'
+                        }, {
+                            offset: 1,
+                            color: '#ffe'
+                        }])
+                    },
+                    data: ['10','23','18','34','45','28','20']
+                },
+                {
+                    name: '模拟数据',
+                    type: 'line',
+                    smooth: true,
+                    stack: 'a',
+                    symbol: 'circle',
+                    symbolSize: 5,
+                    sampling: 'average',
+                    itemStyle: {
+                        color: '#d68262'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#d68262'
+                        }, {
+                            offset: 1,
+                            color: '#ffe'
+                        }])
+                    },
+                    data: ['20','28','41','36','45','28','20']
+                }
+            ]
+        }
+    },
 }
 </script>
 

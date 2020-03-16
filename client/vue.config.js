@@ -53,5 +53,9 @@ module.exports = {
             }
         },
         before: app => { }
-    }
+    },
+    transpileDependencies: [
+        'vue-echarts',
+        'resize-detector'
+    ]
 }
