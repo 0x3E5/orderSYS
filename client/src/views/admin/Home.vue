@@ -28,7 +28,9 @@
         </el-row>
         <el-row>
             <el-col :span="24">
-                <chart ref="chart" :options="chartData" :auto-resize="true"></chart>
+                <div class="panel">
+                    <chart ref="chart" :options="chartData" :auto-resize="true"></chart>
+                </div>
             </el-col>
         </el-row>
         
@@ -36,7 +38,6 @@
 </template>
 
 <script>
-import echarts from 'echarts'
 export default {
     name:'home',
     data(){
@@ -46,25 +47,66 @@ export default {
     },
     mounted() {
         this.chartData = {
+            title: {
+                left: 'center',
+                text: '运营状况统计',
+                subtext: '每日的 "营业收入" 和 "订单数量" 数据统计',
+            },
+            legend:{
+                type:'plain',
+                left:'left'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                },
+                border:'none',
+                formatter: '营业收入: ￥{c0}<br />订单数量: &nbsp;{c1}'
+            },
             xAxis: {
                 type: 'category',
-                lineStyle: {
-                    color: '#004E52',
-                    opacity: 0.5,
-                    width: 2
+                axisTick:{
+                    alignWithLabel:true,
                 },
-                data: ['2020-03-10', '2020-03-11', '2020-03-12', '2020-03-13', '2020-03-14', '2020-03-15', '2020-03-16'],
-                splitLine: {
-                show: false
-                }
+                axisLine:{
+                    onZero:true
+                },
+                data: ['2020-03-10', '2020-03-11', '2020-03-12', '2020-03-13', '2020-03-14', '2020-03-15', '2020-03-16']
             },
             yAxis: {
                 type: 'value',
-                inside:true
+                inside:true,
+                axisLine:{
+                    onZero:true
+                },
+                splitLine:{
+                    lineStyle:{
+                        type:'dashed'
+                    }
+                },
+                axisPointer:{
+                    show:false
+                }
             },
+            dataZoom:[
+                {
+                    type: 'slider',
+                    xAxisIndex: 0,
+                    filterMode: 'empty'
+                },
+                {
+                    type: 'inside',
+                    xAxisIndex: 0,
+                    filterMode: 'empty'
+                }
+            ],
             series: [
                 {
-                    name: '模拟数据',
+                    name: '营业收入',
                     type: 'line',
                     smooth: true,
                     symbol: 'circle',
@@ -75,18 +117,23 @@ export default {
                     },
                     stack: 'a',
                     areaStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: '#8ec6ad'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#8ec6ad'
+                            }, {
+                                offset: 1, color: '#ffe'
+                            }],
+                        }
                     },
                     data: ['10','23','18','34','45','28','20']
                 },
                 {
-                    name: '模拟数据',
+                    name: '订单数量',
                     type: 'line',
                     smooth: true,
                     stack: 'a',
@@ -97,17 +144,25 @@ export default {
                         color: '#d68262'
                     },
                     areaStyle: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: '#d68262'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
+                        color: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0, color: '#d68262'
+                            }, {
+                                offset: 1, color: '#ffe'
+                            }],
+                        }
                     },
                     data: ['20','28','41','36','45','28','20']
                 }
             ]
+        }
+        window.onresize = () => {
+            this.$refs.chart.resize()
         }
     },
 }
@@ -175,5 +230,12 @@ export default {
         color: #fff;
         font-size: 35px;
         font-weight: bold;
+    }
+    .home .panel{
+        width: 100%;
+        margin-top: 20px;
+    }
+    .home .panel > .echarts{
+        width: 100%;
     }
 </style>

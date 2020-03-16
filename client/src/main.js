@@ -8,6 +8,9 @@ import VueSocketIO from 'vue-socket.io'
 import ECharts from 'vue-echarts'
 import 'echarts/lib/chart/line'
 import 'echarts/lib/component/tooltip'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/dataZoom'
 Vue.component('chart', ECharts)
 
 Vue.use(new VueSocketIO({
