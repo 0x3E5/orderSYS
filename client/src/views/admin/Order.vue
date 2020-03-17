@@ -112,6 +112,7 @@ export default {
                         type:'success',
                         message:'订单已完成！'
                     })
+                    this.statisticData(data)
                     this.initTableData()
                 })
                 .catch(err=>{
@@ -130,6 +131,13 @@ export default {
                 .catch(err=>{
                     console.log(err)
                 })
+        },
+        async statisticData(data){
+            try{
+                await this.$axios.post('/api/statistic/submit',{date:data.date,income:data.totalPrice})
+            }catch(err){
+                console.log(err)
+            }
         },
         initTableData(){
             this.$axios.get('/api/order/unfinished')

@@ -42,7 +42,121 @@ export default {
     name:'home',
     data(){
         return {
-            chartData: {},
+            chartData: {
+                title: {
+                    left: 'center',
+                    text: '运营状况统计',
+                    subtext: '每日的 "营业收入" 和 "订单数量" 数据统计',
+                },
+                legend:{
+                    type:'plain',
+                    left:'left'
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    },
+                    border:'none',
+                    formatter: '营业收入: ￥{c0}<br />订单数量: &nbsp;{c1}'
+                },
+                xAxis: {
+                    type: 'category',
+                    axisTick:{
+                        alignWithLabel:true,
+                    },
+                    axisLine:{
+                        onZero:true
+                    },
+                    data: []
+                },
+                yAxis: {
+                    type: 'value',
+                    inside:true,
+                    axisLine:{
+                        onZero:true
+                    },
+                    splitLine:{
+                        lineStyle:{
+                            type:'dashed'
+                        }
+                    },
+                    axisPointer:{
+                        show:false
+                    }
+                },
+                dataZoom:[
+                    {
+                        type: 'slider',
+                        xAxisIndex: 0,
+                        filterMode: 'empty'
+                    },
+                    {
+                        type: 'inside',
+                        xAxisIndex: 0,
+                        filterMode: 'empty'
+                    }
+                ],
+                series: [
+                    {
+                        name: '营业收入',
+                        type: 'line',
+                        smooth: true,
+                        symbol: 'circle',
+                        symbolSize: 5,
+                        sampling: 'average',
+                        itemStyle: {
+                            color: '#8ec6ad'
+                        },
+                        stack: 'a',
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#8ec6ad'
+                                }, {
+                                    offset: 1, color: '#ffe'
+                                }],
+                            }
+                        },
+                        data: []
+                    },
+                    {
+                        name: '订单数量',
+                        type: 'line',
+                        smooth: true,
+                        stack: 'a',
+                        symbol: 'circle',
+                        symbolSize: 5,
+                        sampling: 'average',
+                        itemStyle: {
+                            color: '#FC7992'
+                        },
+                        areaStyle: {
+                            color: {
+                                type: 'linear',
+                                x: 0,
+                                y: 0,
+                                x2: 0,
+                                y2: 1,
+                                colorStops: [{
+                                    offset: 0, color: '#FC7992'
+                                }, {
+                                    offset: 1, color: '#ffe'
+                                }],
+                            }
+                        },
+                        data: []
+                    }
+                ]
+            },
             cardData:{
                 orderCounts:0,
                 totalIncome:0,
@@ -55,7 +169,11 @@ export default {
         async initCard(){
             try{
                 let res = await this.$axios.post('/api/statistic/data',{date:new Date()})
-                this.cardData = res.data
+                this.cardData = res.data.cardData
+                this.chartData.xAxis.data = res.data.chartsData.xData
+                this.chartData.series[0].data = res.data.chartsData.yIncome
+                this.chartData.series[1].data = res.data.chartsData.yOrder
+                console.log(res.data);
             }catch(err){
                 console.log(err)
             }
@@ -63,121 +181,6 @@ export default {
     },
     mounted() {
         this.initCard()
-        this.chartData = {
-            title: {
-                left: 'center',
-                text: '运营状况统计',
-                subtext: '每日的 "营业收入" 和 "订单数量" 数据统计',
-            },
-            legend:{
-                type:'plain',
-                left:'left'
-            },
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                    label: {
-                        backgroundColor: '#6a7985'
-                    }
-                },
-                border:'none',
-                formatter: '营业收入: ￥{c0}<br />订单数量: &nbsp;{c1}'
-            },
-            xAxis: {
-                type: 'category',
-                axisTick:{
-                    alignWithLabel:true,
-                },
-                axisLine:{
-                    onZero:true
-                },
-                data: ['2020-03-10', '2020-03-11', '2020-03-12', '2020-03-13', '2020-03-14', '2020-03-15', '2020-03-16']
-            },
-            yAxis: {
-                type: 'value',
-                inside:true,
-                axisLine:{
-                    onZero:true
-                },
-                splitLine:{
-                    lineStyle:{
-                        type:'dashed'
-                    }
-                },
-                axisPointer:{
-                    show:false
-                }
-            },
-            dataZoom:[
-                {
-                    type: 'slider',
-                    xAxisIndex: 0,
-                    filterMode: 'empty'
-                },
-                {
-                    type: 'inside',
-                    xAxisIndex: 0,
-                    filterMode: 'empty'
-                }
-            ],
-            series: [
-                {
-                    name: '营业收入',
-                    type: 'line',
-                    smooth: true,
-                    symbol: 'circle',
-                    symbolSize: 5,
-                    sampling: 'average',
-                    itemStyle: {
-                        color: '#8ec6ad'
-                    },
-                    stack: 'a',
-                    areaStyle: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 0,
-                            x2: 0,
-                            y2: 1,
-                            colorStops: [{
-                                offset: 0, color: '#8ec6ad'
-                            }, {
-                                offset: 1, color: '#ffe'
-                            }],
-                        }
-                    },
-                    data: ['10','23','18','34','45','28','20']
-                },
-                {
-                    name: '订单数量',
-                    type: 'line',
-                    smooth: true,
-                    stack: 'a',
-                    symbol: 'circle',
-                    symbolSize: 5,
-                    sampling: 'average',
-                    itemStyle: {
-                        color: '#FC7992'
-                    },
-                    areaStyle: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 0,
-                            x2: 0,
-                            y2: 1,
-                            colorStops: [{
-                                offset: 0, color: '#FC7992'
-                            }, {
-                                offset: 1, color: '#ffe'
-                            }],
-                        }
-                    },
-                    data: ['20','28','41','36','45','28','20']
-                }
-            ]
-        }
         window.onresize = () => {
             this.$refs.chart.resize()
         }

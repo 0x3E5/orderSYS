@@ -5,6 +5,7 @@ const passport = require('passport');
 const Order = require('../../models/Order');
 const Category = require('../../models/Category');
 const Commodity = require('../../models/Commodity');
+const ChartsData = require('../../models/ChartsData');
 const moment = require('moment');
 
 // $route POST api/statistic/data
@@ -19,11 +20,11 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
                 {date:{$lte:new Date(date+' 23:59:59')}},
                 {state:1}
             ]
-        }).exec()
+        }).exec();
 
-        const commodityCounts = await Commodity.countDocuments().exec()
+        const commodityCounts = await Commodity.countDocuments().exec();
 
-        const categoryCounts = await Category.countDocuments().exec()
+        const categoryCounts = await Category.countDocuments().exec();
 
         const orderCounts = orders.length;
     
@@ -31,10 +32,39 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
         orders.forEach(item=>{
             totalIncome+=item.totalPrice;
         })
+
+        const chartsData = await ChartsData.find().exec();
+        let xData = [];
+        let yOrder=[];
+        let yIncome=[];
+        if(chartsData){
+            chartsData.forEach(item=>{
+                xData.push(item.date);
+                yOrder.push(item.order);
+                yIncome.push(item.income);
+            })
+        }
     
-        res.json({orderCounts,totalIncome,commodityCounts,categoryCounts})
+        res.json({cardData:{orderCounts,totalIncome,commodityCounts,categoryCounts},chartsData:{xData,yOrder,yIncome}})
     }catch(err){
         console.log(err)
+    }
+})
+// $route POST api/statistic/submit
+// @desc 获取统计信息，返回json数据
+// @access private
+router.post('/submit',async (req,res)=>{
+    try{
+        const date = moment(req.body.date).format('YYYY-MM-DD');
+        const income = parseFloat(req.body.income)
+        const result = await ChartsData.findOneAndUpdate({date},{$inc:{income,order:+1}},{upsert:true,new:true}).exec()
+        if(result){
+            res.json({status:'ok'});
+        }else{
+            res.status(400).send('统计数据失败');
+        }
+    }catch(err){
+        console.log(err);
     }
 })
 
