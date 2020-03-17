@@ -37,7 +37,7 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
 // @desc 查询已完成订单信息，返回json数据
 // @access private
 router.get('/finished',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    Order.find({state:1})
+    Order.find({state:1}).sort({date:-1})
         .then(result=>{
             res.send(result)
         })
