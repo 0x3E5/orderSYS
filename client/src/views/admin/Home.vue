@@ -141,7 +141,7 @@ export default {
                     symbolSize: 5,
                     sampling: 'average',
                     itemStyle: {
-                        color: '#d68262'
+                        color: '#FC7992'
                     },
                     areaStyle: {
                         color: {
@@ -151,7 +151,7 @@ export default {
                             x2: 0,
                             y2: 1,
                             colorStops: [{
-                                offset: 0, color: '#d68262'
+                                offset: 0, color: '#FC7992'
                             }, {
                                 offset: 1, color: '#ffe'
                             }],
@@ -221,6 +221,7 @@ export default {
         position: absolute;
         top: 12px;
         left: 12px;
+        user-select: none;
     }
     .home-card > .card-bg > .card-data{
         position: absolute;
@@ -230,6 +231,7 @@ export default {
         color: #fff;
         font-size: 35px;
         font-weight: bold;
+        user-select: none;
     }
     .home .panel{
         width: 100%;

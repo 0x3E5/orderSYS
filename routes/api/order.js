@@ -24,7 +24,7 @@ router.post('/submit',(req,res)=>{
 // @desc 查询未完成订单信息，返回json数据
 // @access private
 router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    Order.find({state:0})
+    Order.find({state:0}).sort({date:-1})
         .then(result=>{
             res.send(result)
         })
