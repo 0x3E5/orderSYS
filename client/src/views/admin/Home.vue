@@ -4,25 +4,25 @@
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="card-bg card-1">
                     <h3 class="card-title">今日订单</h3>
-                    <span class="card-data">0</span>
+                    <span class="card-data">{{ cardData.orderCounts }}</span>
                 </div>
             </el-col>
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="card-bg card-2">
                     <h3 class="card-title">今日收入</h3>
-                    <span class="card-data">￥0</span>
+                    <span class="card-data">￥{{ cardData.totalIncome }}</span>
                 </div>
             </el-col>
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="card-bg card-3">
                     <h3 class="card-title">商品数量</h3>
-                    <span class="card-data">0</span>
+                    <span class="card-data">{{ cardData.commodityCounts }}</span>
                 </div>
             </el-col>
             <el-col class="home-card" :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
                 <div class="card-bg card-4">
                     <h3 class="card-title">分类数量</h3>
-                    <span class="card-data">0</span>
+                    <span class="card-data">{{ cardData.categoryCounts }}</span>
                 </div>
             </el-col>
         </el-row>
@@ -42,10 +42,27 @@ export default {
     name:'home',
     data(){
         return {
-            chartData: {}
+            chartData: {},
+            cardData:{
+                orderCounts:0,
+                totalIncome:0,
+                commodityCounts:0,
+                categoryCounts:0
+            }
+        }
+    },
+    methods: {
+        async initCard(){
+            try{
+                let res = await this.$axios.post('/api/statistic/data',{date:new Date()})
+                this.cardData = res.data
+            }catch(err){
+                console.log(err)
+            }
         }
     },
     mounted() {
+        this.initCard()
         this.chartData = {
             title: {
                 left: 'center',

@@ -10,6 +10,7 @@ const category = require('./routes/api/category');
 const commodity = require('./routes/api/commodity');
 const qrCode = require('./routes/api/qrCode');
 const order = require('./routes/api/order');
+const statisticData = require('./routes/api/statisticData');
 
 // 设置WebSocket
 const http = require('http').Server(app);
@@ -36,6 +37,7 @@ app.use('/api/category',category);
 app.use('/api/commodity',commodity);
 app.use('/api/qrcode',qrCode);
 app.use('/api/order',order);
+app.use('/api/statistic',statisticData);
 
 // 初始化Passport
 app.use(passport.initialize());
