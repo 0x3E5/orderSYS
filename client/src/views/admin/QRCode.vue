@@ -1,5 +1,5 @@
 <template>
-    <div id="qrCode">
+    <div ref="div" id="qrCode">
         <el-row>
             <span class="search-tittle">桌号搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
@@ -18,6 +18,7 @@
                 <el-table
                     :data="tableData.filter(data => !search || data.no.toString().toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
+                    :height="tableHeight"
                     :default-sort = "{prop: 'no', order: 'ascending'}"
                     style="width: 100%">
                     <el-table-column
@@ -77,6 +78,7 @@ export default {
                 visible:false,
             },
             tableData: [],
+            tableHeight:500,
             search:''
         }
     },
@@ -85,6 +87,7 @@ export default {
             this.$axios.get('/api/qrcode/all')
             .then(res => {
                 this.tableData = res.data
+                this.resizeTable()
             })
             .catch(err => console.log(err))
         },
@@ -121,6 +124,14 @@ export default {
                 visible:true
             }
             this.$refs.showQRCode.drawQRCode(row.url);
+        },
+        resizeTable(){
+            let divHeight = this.$refs.div.offsetHeight
+            this.tableHeight = divHeight-52
+            window.onresize=()=>{
+                let divHeight = this.$refs.div.offsetHeight
+                this.tableHeight = divHeight-52
+            }
         }
     },
     created() {
@@ -139,7 +150,7 @@ export default {
     }
     .row-height{
         margin-top: 10px;
-        height: calc(100% - 32px);
+        /* height: calc(100% - 32px); */
         overflow: auto;
     }
     .btn-shadow{

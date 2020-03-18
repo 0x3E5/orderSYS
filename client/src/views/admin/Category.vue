@@ -1,5 +1,5 @@
 <template>
-    <div id="category">
+    <div ref="div" id="category">
         <el-row>
             <span class="search-tittle">分类搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
@@ -74,6 +74,7 @@ export default {
             this.$axios.get('/api/category/all')
             .then(res => {
                 this.tableData = res.data
+                this.resizeTable()
             })
             .catch(err => console.log(err))
         },
@@ -112,6 +113,14 @@ export default {
                 })
             })
             .catch(_ => {});
+        },
+        resizeTable(){
+            let divHeight = this.$refs.div.offsetHeight
+            this.tableHeight = divHeight-52
+            window.onresize=()=>{
+                let divHeight = this.$refs.div.offsetHeight
+                this.tableHeight = divHeight-52
+            }
         }
     },
     created () {

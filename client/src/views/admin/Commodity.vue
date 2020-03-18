@@ -1,5 +1,5 @@
 <template>
-    <div id="cmmodity">
+    <div ref="div" id="cmmodity">
         <el-row>
             <span class="search-tittle">商品搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
@@ -18,6 +18,7 @@
                 <el-table
                     :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
+                    :max-height="tableHeight"
                     style="width: 100%">
                     <el-table-column align="center" width="100" label="商品图片">
                         <template slot-scope="scope">
@@ -48,6 +49,20 @@
                 </el-table>
             </el-col>
         </el-row>
+        <el-row>
+            <el-col :span="24">
+                <el-pagination
+                class="pagination"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :page-sizes="[100, 200, 300, 400]"
+                :page-size="100"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="400">
+                </el-pagination>
+            </el-col>
+        </el-row>
+        
         <CommodityDialog :dialog="dialog" :categoryList="categoryList" :form ="form" @update="loadData" ></CommodityDialog>
     </div>
 </template>
@@ -74,11 +89,18 @@ export default {
                 soldOut:false
             },
             tableData: [],
+            tableHeight:500,
             categoryList:[],
             search:''
         }
     },
     methods: {
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+        },
         loadData () {
             this.$axios.get('/api/commodity/all')
             .then(res => {
@@ -127,6 +149,14 @@ export default {
                 })
             })
             .catch(_ => {})
+        },
+        resizeTable(){
+            let divHeight = this.$refs.div.offsetHeight
+            this.tableHeight = divHeight-84
+            window.onresize=()=>{
+                let divHeight = this.$refs.div.offsetHeight
+                this.tableHeight = divHeight-84
+            }
         }
     },
     created () {
@@ -134,8 +164,10 @@ export default {
         this.$axios.get('/api/category/all')
             .then(res=>{
                 this.categoryList = res.data
+                this.resizeTable()
             })
-            .catch(err=>console.log(err))
+            .catch(err=>console.log(err)) 
+        
     },
     components: {
         CommodityDialog
@@ -148,7 +180,7 @@ export default {
     }
     .row-height{
         margin-top: 10px;
-        height: calc(100% - 32px);
+        /* height: calc(100% - 84px); */
         overflow: auto;
     }
     .btn-shadow{
@@ -169,5 +201,9 @@ export default {
         height: 32px;
         line-height: 32px;
         color: #111;
+    }
+    .pagination{
+        margin-top:10px;
+        float: right;
     }
 </style>
