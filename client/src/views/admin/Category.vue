@@ -1,10 +1,10 @@
 <template>
-    <div ref="div" id="category">
+    <div id="category">
         <el-row>
             <span class="search-tittle">分类搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-input
-                    placeholder="请输入检索内容"
+                    placeholder="请输入分类名称或分类排序"
                     prefix-icon="el-icon-search"
                     size="small"
                     v-model="search">
@@ -16,8 +16,9 @@
         <el-row class="row-height">
             <el-col :span="24">
                 <el-table
-                    :data="tableData.filter(data => !search || data.cName.toLowerCase().includes(search.toLowerCase()))"
+                    :data="tableData.filter(data => !search || data.cName.toLowerCase().includes(search.toLowerCase()) || data.no==search)"
                     size="medium"
+                    :height="tableHeight"
                     :default-sort = "{prop: 'no', order: 'ascending'}"
                     style="width: 100%">
                     <el-table-column
@@ -66,6 +67,7 @@ export default {
                 no: '',
             },
             tableData: [],
+            tableHeight:window.innerHeight-142,
             search:''
         }
     },
@@ -74,7 +76,6 @@ export default {
             this.$axios.get('/api/category/all')
             .then(res => {
                 this.tableData = res.data
-                this.resizeTable()
             })
             .catch(err => console.log(err))
         },
@@ -114,17 +115,12 @@ export default {
             })
             .catch(_ => {});
         },
-        resizeTable(){
-            let divHeight = this.$refs.div.offsetHeight
-            this.tableHeight = divHeight-52
-            window.onresize=()=>{
-                let divHeight = this.$refs.div.offsetHeight
-                this.tableHeight = divHeight-52
-            }
-        }
     },
     created () {
         this.loadData()
+        window.onresize=()=>{
+            this.tableHeight = window.innerHeight-142;
+        }
     },
     components: {
         CategoryDialog
@@ -137,7 +133,7 @@ export default {
     }
     .row-height{
         margin-top: 10px;
-        height: calc(100% - 32px);
+        /* height: calc(100% - 32px); */
         overflow: auto;
     }
     .btn-shadow{

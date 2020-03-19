@@ -1,10 +1,10 @@
 <template>
-    <div ref="div" id="qrCode">
+    <div id="qrCode">
         <el-row>
             <span class="search-tittle">桌号搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-input
-                    placeholder="请输入检索内容"
+                    placeholder="请输入桌号"
                     prefix-icon="el-icon-search"
                     size="small"
                     v-model="search">
@@ -78,7 +78,7 @@ export default {
                 visible:false,
             },
             tableData: [],
-            tableHeight:500,
+            tableHeight:window.innerHeight-142,
             search:''
         }
     },
@@ -87,7 +87,6 @@ export default {
             this.$axios.get('/api/qrcode/all')
             .then(res => {
                 this.tableData = res.data
-                this.resizeTable()
             })
             .catch(err => console.log(err))
         },
@@ -124,18 +123,13 @@ export default {
                 visible:true
             }
             this.$refs.showQRCode.drawQRCode(row.url);
-        },
-        resizeTable(){
-            let divHeight = this.$refs.div.offsetHeight
-            this.tableHeight = divHeight-52
-            window.onresize=()=>{
-                let divHeight = this.$refs.div.offsetHeight
-                this.tableHeight = divHeight-52
-            }
         }
     },
     created() {
         this.loadData()
+        window.onresize=()=>{
+            this.tableHeight = window.innerHeight-142;
+        }
     },
     components:{
         TableNumDialog,

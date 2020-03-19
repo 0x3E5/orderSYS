@@ -1,9 +1,23 @@
 <template>
     <div class="order">
         <el-row>
+            <span class="search-tittle">订单搜索：</span>
+            <el-col :xs="8" :sm="6" :md="6" :lg="5">
+                <el-input
+                    placeholder="请输入检索内容"
+                    prefix-icon="el-icon-search"
+                    size="small"
+                    v-model="search">
+                </el-input>
+            </el-col>
+            
+            <el-button type="primary" size="small" class="btn-shadow" >搜索</el-button>
+        </el-row>
+        <el-row>
             <el-col :span="24">
                 <el-table
                 :data="tableData"
+                :height="tableHeight"
                 style="width: 100%">
                 <el-table-column type="expand">
                 <template slot-scope="props">
@@ -99,7 +113,19 @@
             </el-table>
             </el-col>
         </el-row>
-        
+        <el-row>
+            <el-col :span="24">
+                <el-pagination
+                class="pagination"
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :page-sizes="[100, 200, 300, 400]"
+                :page-size="100"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="400">
+                </el-pagination>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -108,10 +134,18 @@ export default {
     name:'history',
     data(){
         return{
-            tableData:[]
+            tableData:[],
+            tableHeight:window.innerHeight-184,
+            search:''
         }
     },
     methods:{
+        handleSizeChange(val) {
+            console.log(`每页 ${val} 条`);
+        },
+        handleCurrentChange(val) {
+            console.log(`当前页: ${val}`);
+        },
         del(data){
             this.$axios.post('/api/order/cancel',{_id:data._id})
                 .then(res=>{
@@ -137,6 +171,9 @@ export default {
     },
     mounted() {
         this.initTableData()
+        window.onresize=()=>{
+            this.tableHeight = window.innerHeight - 184
+        }
     },
     filters:{
         orderList(order){
@@ -158,6 +195,18 @@ export default {
 <style>
     .order{
         height: 100%;
+    }
+    .search-tittle{
+        display: inline-block;
+        float: left;
+        height: 32px;
+        line-height: 32px;
+        color: #111;
+    }
+    .btn-shadow{
+        float: right;
+        top: 0;
+        box-shadow: 0px 0px 20px rgba(53, 141, 230, 0.562);
     }
     .demo-table-expand {
     font-size: 0;
@@ -190,5 +239,9 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .pagination{
+        margin-top:10px;
+        float: right;
     }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div ref="div" id="cmmodity">
+    <div id="cmmodity">
         <el-row>
             <span class="search-tittle">商品搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
@@ -89,7 +89,7 @@ export default {
                 soldOut:false
             },
             tableData: [],
-            tableHeight:500,
+            tableHeight:window.innerHeight-194,
             categoryList:[],
             search:''
         }
@@ -149,14 +149,6 @@ export default {
                 })
             })
             .catch(_ => {})
-        },
-        resizeTable(){
-            let divHeight = this.$refs.div.offsetHeight
-            this.tableHeight = divHeight-84
-            window.onresize=()=>{
-                let divHeight = this.$refs.div.offsetHeight
-                this.tableHeight = divHeight-84
-            }
         }
     },
     created () {
@@ -164,10 +156,11 @@ export default {
         this.$axios.get('/api/category/all')
             .then(res=>{
                 this.categoryList = res.data
-                this.resizeTable()
             })
             .catch(err=>console.log(err)) 
-        
+        window.onresize = ()=>{
+            this.tableHeight = window.innerHeight - 194
+        }
     },
     components: {
         CommodityDialog
@@ -180,7 +173,6 @@ export default {
     }
     .row-height{
         margin-top: 10px;
-        /* height: calc(100% - 84px); */
         overflow: auto;
     }
     .btn-shadow{

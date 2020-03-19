@@ -4,6 +4,7 @@
             <el-col :span="24">
                 <el-table
                 :data="tableData"
+                :height="tableHeight"
                 style="width: 100%">
                 <el-table-column type="expand">
                 <template slot-scope="props">
@@ -101,7 +102,8 @@ export default {
     name:'order',
     data(){
         return{
-            tableData:[]
+            tableData:[],
+            tableHeight:window.innerHeight - 105
         }
     },
     methods:{
@@ -151,6 +153,9 @@ export default {
     },
     mounted() {
         this.initTableData()
+        window.onresize = ()=>{
+            this.tableHeight=window.innerHeight - 105
+        }
     },
     sockets:{
         checkOrder(){
