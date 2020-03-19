@@ -33,17 +33,18 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
         })
 })
 
-// $route GET api/order/finished
+// $route POST api/order/finished
 // @desc 查询已完成订单信息，返回json数据
 // @access private
-router.get('/finished',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    Order.find({state:1}).sort({date:-1})
-        .then(result=>{
-            res.send(result)
-        })
-        .catch(err=>{
-            res.status(400).send('查询失败，请重试！')
-        })
+router.post('/finished',passport.authenticate('jwt',{session:false}),async (req,res)=>{
+    try{
+        let page = req.body;
+        const total = await Order.countDocuments({state:1}).exec();
+        const result = await Order.find({state:1}).limit(page.size).skip(page.size * (page.index-1))
+        res.json({total,result})
+    }catch(err){
+        console.log(err);
+    }
 })
 
 // $route POST api/order/finish

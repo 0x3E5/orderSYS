@@ -119,10 +119,11 @@
                 class="pagination"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="400">
+                :current-page.sync="paginations.page_index"
+                :page-sizes="paginations.page_sizes"
+                :page-size="paginations.page_size"
+                :layout="paginations.layout"
+                :total="paginations.total">
                 </el-pagination>
             </el-col>
         </el-row>
@@ -136,15 +137,23 @@ export default {
         return{
             tableData:[],
             tableHeight:window.innerHeight-184,
-            search:''
+            search:'',
+            paginations:{
+                page_index:1,
+                total:0,
+                page_size:5,
+                page_sizes:[5,10,15,20],
+                layout:'total, sizes, prev, pager, next, jumper'
+            }
         }
     },
     methods:{
         handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
+            this.paginations.page_size = val
+            this.initTableData()
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
+            this.initTableData()
         },
         del(data){
             this.$axios.post('/api/order/cancel',{_id:data._id})
@@ -160,9 +169,14 @@ export default {
                 })
         },
         initTableData(){
-            this.$axios.get('/api/order/finished')
+            let page = {
+                index:this.paginations.page_index,
+                size:this.paginations.page_size
+            }
+            this.$axios.post('/api/order/finished',page)
             .then(res=>{
-                this.tableData = res.data
+                this.tableData = res.data.result
+                this.paginations.total = res.data.total
             })
             .catch(err=>{
                 console.log(err)

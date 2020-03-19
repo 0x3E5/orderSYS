@@ -184,7 +184,7 @@ export default {
         height: 100%;
     }
     .demo-table-expand {
-    font-size: 0;
+        font-size: 0;
     }
     .demo-table-expand label {
         width: 90px;

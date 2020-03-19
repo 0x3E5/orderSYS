@@ -42,19 +42,18 @@ router.post('/del',passport.authenticate('jwt',{session:false}),(req,res)=>{
         .catch(err=>res.status(400).send('删除商品失败，请重试！'))
 })
 
-// $route get api/commodity/all
+// $route POST api/commodity/all
 // @desc 获取所有商品信息，返回json数据
 // @access private
-router.get('/all',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    Commodity.find()
-        .then(result=>{
-            if(!result){
-                res.json({})
-            }else{
-                res.json(result)
-            }
-        })
-        .catch(err=>res.status(400).send('获取数据失败，请稍后再试！'))
+router.post('/all',passport.authenticate('jwt',{session:false}),async (req,res)=>{
+    try{
+        let page = req.body;
+        const result = await Commodity.find().limit(page.size).skip(page.size * (page.index-1)).exec();
+        const total = await Commodity.countDocuments().exec();
+        res.json({result,total})
+    }catch(err){
+        console.log(err);
+    }
 })
 
 

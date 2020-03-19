@@ -55,10 +55,11 @@
                 class="pagination"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
-                :page-sizes="[100, 200, 300, 400]"
-                :page-size="100"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="400">
+                :current-page.sync="paginations.page_index"
+                :page-sizes="paginations.page_sizes"
+                :page-size="paginations.page_size"
+                :layout="paginations.layout"
+                :total="paginations.total">
                 </el-pagination>
             </el-col>
         </el-row>
@@ -91,20 +92,33 @@ export default {
             tableData: [],
             tableHeight:window.innerHeight-194,
             categoryList:[],
-            search:''
+            search:'',
+            paginations:{
+                page_index:1,
+                total:0,
+                page_size:5,
+                page_sizes:[5,10,15,20],
+                layout:'total, sizes, prev, pager, next, jumper'
+            }
         }
     },
     methods: {
         handleSizeChange(val) {
-            console.log(`每页 ${val} 条`);
+            this.paginations.page_size = val
+            this.loadData()
         },
         handleCurrentChange(val) {
-            console.log(`当前页: ${val}`);
+            this.loadData()
         },
         loadData () {
-            this.$axios.get('/api/commodity/all')
+            let page = {
+                index:this.paginations.page_index,
+                size:this.paginations.page_size
+            }
+            this.$axios.post('/api/commodity/all',page)
             .then(res => {
-                this.tableData = res.data
+                this.tableData = res.data.result
+                this.paginations.total = res.data.total
             })
             .catch(err => console.log(err))
         },
@@ -153,11 +167,6 @@ export default {
     },
     created () {
         this.loadData()
-        this.$axios.get('/api/category/all')
-            .then(res=>{
-                this.categoryList = res.data
-            })
-            .catch(err=>console.log(err)) 
         window.onresize = ()=>{
             this.tableHeight = window.innerHeight - 194
         }

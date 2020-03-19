@@ -173,7 +173,6 @@ export default {
                 this.chartData.xAxis.data = res.data.chartsData.xData
                 this.chartData.series[0].data = res.data.chartsData.yIncome
                 this.chartData.series[1].data = res.data.chartsData.yOrder
-                console.log(res.data);
             }catch(err){
                 console.log(err)
             }

@@ -133,7 +133,6 @@ export default {
     }
     .row-height{
         margin-top: 10px;
-        /* height: calc(100% - 32px); */
         overflow: auto;
     }
     .btn-shadow{
