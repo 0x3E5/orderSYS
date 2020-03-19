@@ -1,7 +1,7 @@
 <template>
     <div id="cmmodity">
         <el-row>
-            <span class="search-tittle">商品搜索：</span>
+                <span class="search-tittle">商品搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-input
                     placeholder="请输入商品名称"

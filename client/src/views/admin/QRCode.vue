@@ -18,7 +18,7 @@
                 <el-table
                     :data="tableData.filter(data => !search || data.no.toString().toLowerCase().includes(search.toLowerCase()))"
                     size="medium"
-                    :height="tableHeight"
+                    :max-height="tableHeight"
                     :default-sort = "{prop: 'no', order: 'ascending'}"
                     style="width: 100%">
                     <el-table-column

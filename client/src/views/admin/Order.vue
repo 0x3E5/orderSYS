@@ -4,7 +4,7 @@
             <el-col :span="24">
                 <el-table
                 :data="tableData"
-                :height="tableHeight"
+                :max-height="tableHeight"
                 style="width: 100%">
                 <el-table-column type="expand">
                 <template slot-scope="props">
