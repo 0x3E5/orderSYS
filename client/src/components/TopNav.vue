@@ -1,6 +1,7 @@
 <template>
     <div id="top-nav">
         <el-row>
+            <i @click="toggleLeft" :class="[show?'el-icon-s-fold':'el-icon-s-unfold','size']"></i>
             <el-col :span="6" class="logo-container">
                 <!-- <span class="title">在线点餐系统</span> -->
             </el-col>
@@ -39,7 +40,7 @@ export default {
   name: 'topNav',
   data () {
     return {
-
+        show:true
     }
   },
   methods: {
@@ -59,6 +60,10 @@ export default {
       localStorage.removeItem('orderTk')
       this.$store.dispatch('clearCurrentState')
       this.$router.push('/login')
+    },
+    toggleLeft(){
+        this.$emit('toggleLeft')
+        this.show = !this.show
     }
   },
   computed: {
@@ -87,6 +92,11 @@ export default {
         box-shadow: 1px 0px 40px rgba(58, 59, 69, 0.3);
         margin-bottom: 15px;
         overflow: hidden;
+    }
+    .size{
+        font-size: 22px;
+        line-height: 44px;
+        cursor: pointer;
     }
     .logo-container{
         line-height: 44px;
