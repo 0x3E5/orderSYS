@@ -11,7 +11,8 @@ socketio.getSocketIO = (serve)=>{
     }
     io.sockets.on('connection', function (socket) {  
         socket.on('submitOrder',function(){  
-            socket.broadcast.emit('checkOrder');  
+            socket.broadcast.emit('checkOrder');
+            socket.broadcast.emit('playAudio');
         })  
     })
 }

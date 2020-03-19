@@ -26,6 +26,11 @@
                 </div>
             </el-col>
         </el-row>
+        <div class="audioBar">
+            <audio ref="ding" src="../assets/audio/ding.mp3">
+            您的浏览器不支持 audio 标签。
+            </audio>
+        </div>
     </div>
 </template>
 
@@ -60,7 +65,12 @@ export default {
     user () {
       return this.$store.getters.getUser
     }
-  }
+  },
+  sockets:{
+    playAudio(){
+        this.$refs.ding.play()
+    }
+  },
 }
 </script>
 
@@ -123,5 +133,8 @@ export default {
     .el-dropdown-menu{
         border-radius: 6px;
         box-shadow: 0px 2px 30px rgba(58, 59, 69, .3);
+    }
+    .audioBar{
+        display: none;
     }
 </style>
