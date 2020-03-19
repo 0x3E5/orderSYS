@@ -4,10 +4,12 @@
             <span class="search-tittle">商品搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-input
-                    placeholder="请输入检索内容"
-                    prefix-icon="el-icon-search"
+                    placeholder="请输入商品名称"
                     size="small"
-                    v-model="search">
+                    prefix-icon="el-icon-search"
+                    @input="loadData"
+                    v-model="search"
+                    clearable>
                 </el-input>
             </el-col>
             
@@ -16,7 +18,7 @@
         <el-row class="row-height">
             <el-col :span="24">
                 <el-table
-                    :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+                    :data="tableData"
                     size="medium"
                     :max-height="tableHeight"
                     style="width: 100%">
@@ -93,6 +95,7 @@ export default {
             tableHeight:window.innerHeight-194,
             categoryList:[],
             search:'',
+            suggests:[],
             paginations:{
                 page_index:1,
                 total:0,
@@ -113,9 +116,10 @@ export default {
         loadData () {
             let page = {
                 index:this.paginations.page_index,
-                size:this.paginations.page_size
+                size:this.paginations.page_size,
+                name:this.search
             }
-            this.$axios.post('/api/commodity/all',page)
+            this.$axios.post('/api/commodity/get',page)
             .then(res => {
                 this.tableData = res.data.result
                 this.paginations.total = res.data.total
