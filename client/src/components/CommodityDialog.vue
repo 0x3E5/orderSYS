@@ -34,20 +34,22 @@
             <el-form-item label="商品价格" prop="price" :label-width="formLabelWidth">
                 <el-input type="number" v-model="form.price" autocomplete="off" placeholder="请输入商品价格"></el-input>
             </el-form-item>
-            <el-form-item label="是否打折"  v-model="form.isDiscount" :label-width="formLabelWidth">
-                <el-radio-group v-model="form.isDiscount">
-                <el-radio :label="true">是</el-radio>
-                <el-radio :label="false">否</el-radio>
-                </el-radio-group>
+            <el-form-item label="商品打折"  v-model="form.isDiscount" :label-width="formLabelWidth">
+                <el-switch
+                v-model="form.isDiscount"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+                </el-switch>
             </el-form-item>
             <el-form-item label="折前价格" prop="onSale" :label-width="formLabelWidth">
                 <el-input type="number" v-model="form.onSale" autocomplete="off" placeholder="请输入折前价格"></el-input>
             </el-form-item>
-            <el-form-item label="是否售罄"  v-model="form.soldOut" :label-width="formLabelWidth">
-                <el-radio-group v-model="form.soldOut">
-                <el-radio :label="true">是</el-radio>
-                <el-radio :label="false">否</el-radio>
-                </el-radio-group>
+            <el-form-item label="商品售罄"  v-model="form.soldOut" :label-width="formLabelWidth">
+                <el-switch
+                v-model="form.soldOut"
+                active-color="#13ce66"
+                inactive-color="#ff4949">
+                </el-switch>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
