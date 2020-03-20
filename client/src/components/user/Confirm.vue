@@ -56,6 +56,7 @@ export default {
                     this.showConfirm = false
                     this.$socket.emit('submitOrder')
                     this.$emit('clear')
+                    this.remark=''
                     this.$message({
                         type:'success',
                         message:'下单成功店家正在处理您的订单请耐心等待...'

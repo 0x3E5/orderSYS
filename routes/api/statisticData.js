@@ -16,7 +16,7 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
         const date = moment(req.body.date).format('YYYY-MM-DD')
         const orders = await Order.find({
             $and:[
-                {date:{$gte:new Date(date+' 0:0:0')}},
+                {date:{$gte:new Date(date+' 00:00:00')}},
                 {date:{$lte:new Date(date+' 23:59:59')}},
                 {state:1}
             ]
@@ -32,6 +32,7 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
         orders.forEach(item=>{
             totalIncome+=item.totalPrice;
         })
+        totalIncome = Math.round(totalIncome * 100) / 100
 
         const chartsData = await ChartsData.find().exec();
         let xData = [];
@@ -41,7 +42,7 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
             chartsData.forEach(item=>{
                 xData.push(item.date);
                 yOrder.push(item.order);
-                yIncome.push(item.income);
+                yIncome.push(Math.round(item.income * 100) / 100);
             })
         }
     
@@ -51,7 +52,7 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
     }
 })
 // $route POST api/statistic/submit
-// @desc 获取统计信息，返回json数据
+// @desc 提交统计信息，返回json数据
 // @access private
 router.post('/submit',async (req,res)=>{
     try{
