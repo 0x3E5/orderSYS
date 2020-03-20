@@ -3,12 +3,12 @@
         <el-row>
             <span class="search-tittle">订单搜索：</span>
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
-                <el-input
-                    placeholder="请输入检索内容"
-                    prefix-icon="el-icon-search"
-                    size="small"
-                    v-model="search">
-                </el-input>
+                <el-date-picker
+                v-model="search"
+                type="date"
+                size="small"
+                placeholder="选择日期">
+                </el-date-picker>
             </el-col>
             
             <el-button type="primary" size="small" class="btn-shadow" >搜索</el-button>
@@ -171,7 +171,8 @@ export default {
         initTableData(){
             let page = {
                 index:this.paginations.page_index,
-                size:this.paginations.page_size
+                size:this.paginations.page_size,
+                search:this.search
             }
             this.$axios.post('/api/order/finished',page)
             .then(res=>{

@@ -50,14 +50,13 @@ router.post('/get',passport.authenticate('jwt',{session:false}),async (req,res)=
         let page = req.body;
         if(page.name){
             const reg = new RegExp(`^.*${page.name}.*$`);
-            const result = await Commodity.find({name:reg}).limit(page.size).skip(page.size * (page.index-1)).exec();
-            const total = await Commodity.countDocuments({name:reg}).exec();
-            res.json({result,total})
+            page.name={name:reg};
         }else{
-            const result = await Commodity.find().limit(page.size).skip(page.size * (page.index-1)).exec();
-            const total = await Commodity.countDocuments().exec();
-            res.json({result,total})
+            page.name={};
         }
+        const result = await Commodity.find(page.name).limit(page.size).skip(page.size * (page.index-1)).exec();
+        const total = await Commodity.countDocuments(page.name).exec();
+        res.json({result,total})
     }catch(err){
         console.log(err);
     }

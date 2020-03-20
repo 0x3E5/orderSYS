@@ -39,9 +39,13 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
 router.post('/finished',passport.authenticate('jwt',{session:false}),async (req,res)=>{
     try{
         let page = req.body;
-        const total = await Order.countDocuments({state:1}).exec();
-        const result = await Order.find({state:1}).limit(page.size).skip(page.size * (page.index-1))
-        res.json({total,result})
+        if(page.search){
+            
+        }else{
+            const total = await Order.countDocuments({state:1}).exec();
+            const result = await Order.find({state:1}).limit(page.size).skip(page.size * (page.index-1))
+            res.json({total,result})
+        }
     }catch(err){
         console.log(err);
     }
