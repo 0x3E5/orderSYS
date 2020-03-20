@@ -39,13 +39,30 @@ router.get('/unfinished',passport.authenticate('jwt',{session:false}),(req,res)=
 router.post('/finished',passport.authenticate('jwt',{session:false}),async (req,res)=>{
     try{
         let page = req.body;
+        let query = {};
         if(page.search){
-            
+            page.search = moment(page.search).format('YYYY-MM-DD')
+            query={
+                $and:[
+                    {
+                        date:{
+                            $gte:new Date(page.search+' 00:00:00'),
+                            $lte:new Date(page.search+' 23:59:59')
+                        }
+                    },
+                    {
+                        state:1
+                    }
+                ]
+            }
         }else{
-            const total = await Order.countDocuments({state:1}).exec();
-            const result = await Order.find({state:1}).limit(page.size).skip(page.size * (page.index-1))
-            res.json({total,result})
+            query={
+                state:1
+            }
         }
+        const total = await Order.countDocuments(query).exec();
+        const result = await Order.find(query).sort({date:-1}).limit(page.size).skip(page.size * (page.index-1));
+        res.json({total,result});
     }catch(err){
         console.log(err);
     }

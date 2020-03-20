@@ -5,6 +5,7 @@
             <el-col :xs="8" :sm="6" :md="6" :lg="5">
                 <el-date-picker
                 v-model="search"
+                @change="initTableData"
                 type="date"
                 size="small"
                 placeholder="选择日期">
