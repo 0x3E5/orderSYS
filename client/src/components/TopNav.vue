@@ -74,6 +74,12 @@ export default {
   sockets:{
     playAudio(){
         this.$refs.ding.play()
+        this.$notify({
+          title: '您有新的订单',
+          message: '请前往订单管理页面查看！',
+          type: 'success',
+          offset:60
+        })
     }
   },
 }

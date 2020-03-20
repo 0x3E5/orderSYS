@@ -1,9 +1,9 @@
 <template>
     <div id="admin-index">
-        <div :class="['left',{'left-hide':!show}]">
+        <div :class="['left-container',{'left-hide':!show}]">
             <LeftNav />
         </div>
-        <div :class="['right',{'right-hide':!show}]">
+        <div :class="['right-container',{'right-hide':!show}]">
             <TopNav @toggleLeft="toggleLeft" />
             <div class="container">
                 <transition class="el-fade-in">
@@ -44,7 +44,7 @@ export default {
         width: 100%;
         position: relative;
     }
-    .left{
+    .left-container{
         position: absolute;
         /* float: left; */
         top: 0;
@@ -56,7 +56,7 @@ export default {
     .left-hide{
         left: -224px;
     }
-    .right{
+    .right-container{
         box-sizing: border-box;
         padding-left: 224px;
         width: 100%;
