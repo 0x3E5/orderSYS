@@ -16,8 +16,7 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
         const date = moment(req.body.date).format('YYYY-MM-DD')
         const orders = await Order.find({
             $and:[
-                {date:{$gte:new Date(date+' 00:00:00')}},
-                {date:{$lte:new Date(date+' 23:59:59')}},
+                {date:{$gte:new Date(date+' 00:00:00'),$lte:new Date(date+' 23:59:59')}},
                 {state:1}
             ]
         }).exec();

@@ -11,8 +11,6 @@
                 placeholder="选择日期">
                 </el-date-picker>
             </el-col>
-            
-            <el-button type="primary" size="small" class="btn-shadow" >搜索</el-button>
         </el-row>
         <el-row>
             <el-col :span="24">
@@ -97,7 +95,7 @@
                         </el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                 align="center"
                 fixed="right"
                 width="80"
@@ -110,7 +108,7 @@
                         <el-button slot="reference" size="mini" type="danger">删除</el-button>
                         </el-popconfirm>
                     </template>
-                </el-table-column>
+                </el-table-column> -->
             </el-table>
             </el-col>
         </el-row>

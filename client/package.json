@@ -11,6 +11,7 @@
     "better-scroll": "^2.0.0-beta.6",
     "core-js": "^3.6.4",
     "echarts": "^4.6.0",
+    "element-resize-detector": "^1.2.1",
     "element-ui": "^2.4.5",
     "jwt-decode": "^2.2.0",
     "qrcode": "^1.4.4",

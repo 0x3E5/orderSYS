@@ -47,7 +47,6 @@ body,
 ::-webkit-scrollbar{
   width:10px;
   height:10px;
-  /**/
 }
 ::-webkit-scrollbar-track{
   background: rgb(239, 239, 239);
@@ -58,9 +57,9 @@ body,
   border-radius:10px;
 }
 ::-webkit-scrollbar-thumb:hover{
-  background: #333;
+  background: #304156a2;
 }
 ::-webkit-scrollbar-corner{
-  background: #179a16;
+  background: #ddd;
 }
 </style>

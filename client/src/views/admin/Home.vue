@@ -28,7 +28,7 @@
         </el-row>
         <el-row>
             <el-col :span="24">
-                <div class="panel">
+                <div ref="panel" class="panel">
                     <chart ref="chart" :options="chartData" :auto-resize="true"></chart>
                 </div>
             </el-col>
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import elementResizeDetectorMaker from 'element-resize-detector'
 export default {
     name:'home',
     data(){
@@ -180,10 +181,11 @@ export default {
     },
     mounted() {
         this.initCard()
-        window.onresize = () => {
+        let erd = elementResizeDetectorMaker();
+        erd.listenTo(this.$refs.panel,  (element) => {
             this.$refs.chart.resize()
-        }
-    },
+        })
+    }
 }
 </script>
 
