@@ -61,11 +61,11 @@ export default {
         ],
         shopIntro: [
           { required: true, message: '店铺简介不能为空！', trigger: 'blur' },
-          { min: 10, max: 50, message: '长度在10到50之间！', trigger: 'blur' }
+          { min: 10, message: '店铺简介最少为10个字符！', trigger: 'blur' }
         ],
         shopNotice: [
           { required: true, message: '店铺公告不能为空！', trigger: 'blur' },
-          { min: 10, max: 50, message: '长度在10到50之间！', trigger: 'blur' }
+          { min: 10, message: '店铺公告最少为10个字符！', trigger: 'blur' }
         ]
       }
     }

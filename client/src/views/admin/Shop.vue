@@ -26,10 +26,10 @@
                     <el-input v-model="form.shopName" placeholder="请输入店铺名称！"></el-input>
                 </el-form-item>
                 <el-form-item label="店铺简介" prop="shopIntro">
-                    <el-input type="textarea" v-model="form.shopIntro" maxlength="50" :autosize="{ minRows: 4, maxRows: 4}" show-word-limit placeholder="请输入店铺简介！"></el-input>
+                    <el-input type="textarea" v-model="form.shopIntro" :autosize="{ minRows: 4, maxRows: 4}" show-word-limit placeholder="请输入店铺简介！"></el-input>
                 </el-form-item>
                 <el-form-item label="店铺公告" prop="shopNotice">
-                    <el-input type="textarea" v-model="form.shopNotice" maxlength="50" :autosize="{ minRows: 4, maxRows: 4}" show-word-limit placeholder="请输入店铺公告！"></el-input>
+                    <el-input type="textarea" v-model="form.shopNotice" :autosize="{ minRows: 4, maxRows: 4}" show-word-limit placeholder="请输入店铺公告！"></el-input>
                 </el-form-item>
                     <el-button
                     type="primary"
@@ -58,15 +58,15 @@ export default {
             rules: {
                 shopName: [
                 { required: true, message: '店铺名称不能为空！', trigger: 'blur' },
-                { min: 2, max: 10, message: '长度在2到10个字符之间！', trigger: 'blur' }
+                { min: 2, max: 16, message: '长度在2到16个字符之间！', trigger: 'blur' }
                 ],
                 shopIntro: [
                 { required: true, message: '店铺简介不能为空！', trigger: 'blur' },
-                { min: 10, max: 50, message: '长度在10到50之间！', trigger: 'blur' }
+                { min: 10, message: '店铺简介最少为10个字符！', trigger: 'blur' }
                 ],
                 shopNotice: [
                 { required: true, message: '店铺公告不能为空！', trigger: 'blur' },
-                { min: 10, max: 50, message: '长度在10到50之间！', trigger: 'blur' }
+                { min: 10, message: '店铺公告最少为10个字符！', trigger: 'blur' }
                 ]
             }
         }
