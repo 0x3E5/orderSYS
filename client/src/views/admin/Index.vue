@@ -1,7 +1,7 @@
 <template>
     <div id="admin-index">
         <div :class="['left-container',{'left-hide':!show}]">
-            <LeftNav />
+            <LeftNav></LeftNav>
         </div>
         <div :class="['right-container',{'right-hide':!show}]">
             <TopNav @toggleLeft="toggleLeft" />
@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import TopNav from '@/components/TopNav'
-import LeftNav from '@/components/LeftNav'
+import TopNav from '@/components/admin/TopNav'
+import LeftNav from '@/components/admin/LeftNav'
 export default {
   name: 'adminIndex',
   data () {

@@ -28,7 +28,7 @@
             </el-col>
         </el-row>
         <div class="audioBar">
-            <audio ref="ding" src="../assets/audio/ding.mp3">
+            <audio ref="ding" src="../../assets/audio/ding.mp3">
             您的浏览器不支持 audio 标签。
             </audio>
         </div>

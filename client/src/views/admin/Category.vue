@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import CategoryDialog from '@/components/CategoryDialog'
+import CategoryDialog from '@/components/admin/CategoryDialog'
 export default {
     name: 'category',
     data () {

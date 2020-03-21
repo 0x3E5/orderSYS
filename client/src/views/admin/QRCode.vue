@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import TableNumDialog from '../../components/TableNumDialog'
-import ShowQRCode from '../../components/ShowQRCode'
+import TableNumDialog from '../../components/admin/TableNumDialog'
+import ShowQRCode from '../../components/admin/ShowQRCode'
 export default {
     name:'qrCode',
     data(){

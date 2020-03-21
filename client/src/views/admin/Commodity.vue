@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import CommodityDialog from '@/components/CommodityDialog'
+import CommodityDialog from '@/components/admin/CommodityDialog'
 export default {
     name: 'cmmodity',
     data () {
