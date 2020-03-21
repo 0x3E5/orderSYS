@@ -20,19 +20,14 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
                 {state:1}
             ]
         }).exec();
-
         const commodityCounts = await Commodity.countDocuments().exec();
-
         const categoryCounts = await Category.countDocuments().exec();
-
         const orderCounts = orders.length;
-    
         let totalIncome = 0; 
         orders.forEach(item=>{
             totalIncome+=item.totalPrice;
         })
         totalIncome = Math.round(totalIncome * 100) / 100
-
         const chartsData = await ChartsData.find().exec();
         let xData = [];
         let yOrder=[];
@@ -44,7 +39,6 @@ router.post('/data',passport.authenticate('jwt',{session:false}),async (req,res)
                 yIncome.push(Math.round(item.income * 100) / 100);
             })
         }
-    
         res.json({cardData:{orderCounts,totalIncome,commodityCounts,categoryCounts},chartsData:{xData,yOrder,yIncome}})
     }catch(err){
         console.log(err)

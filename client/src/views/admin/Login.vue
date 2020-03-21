@@ -26,14 +26,14 @@ export default {
   data () {
     const checkUser = (rule, value, callback) => {
       if (value === '') {
-        callback()
+        callback(new Error('用户名不能为空！'))
       } else {
         callback()
       }
     }
     const checkPass = (rule, value, callback) => {
       if (value === '') {
-        callback()
+        callback(new Error('密码不能为空！'))
       } else {
         callback()
       }

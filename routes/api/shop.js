@@ -34,22 +34,21 @@ router.post('/edit',passport.authenticate('jwt',{session:false}),(req,res)=>{
 // $route post api/shop/create
 // @desc 创建店铺信息，返回json数据
 // @access public
-router.post('/create',(req,res)=>{
-    Shop.countDocuments()
-        .then(count => {
-            if (count === 0) {
-                let shopInfo = req.body;
-                Shop.create(shopInfo,(err)=>{
-                    if(err) throw err;
-                    res.send('店铺信息创建成功！');
-                })
-            }else{
-                res.status(405).json({status:'failed',msg:'系统已存在店铺信息，请勿重复初始化！'});
-            }
+router.post('/create',async (req,res)=>{
+    try {
+        const count = await Shop.countDocuments().exec();
+        if(count!==0){
+            res.status(400).send('系统已存在店铺信息，请勿重复初始化！');
+            return;
+        }
+        let shopInfo = req.body;
+        Shop.create(shopInfo,(err)=>{
+            if(err) throw err;
+            res.send('店铺信息初始化成功！');
         })
-        .catch(err=>{
-            console.log('[Err] '+err);
-        })
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 // $route POST api/shop/upload

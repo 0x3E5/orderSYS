@@ -33,7 +33,6 @@ router.post('/edit',passport.authenticate('jwt',{session:false}),(req,res)=>{
 // @desc 删除分类信息
 // @access private
 router.post('/del',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    console.log(req.body);
     Category.findOneAndRemove({_id:req.body._id},{new:true})
         .then(result=>{
             res.send('删除成功！');

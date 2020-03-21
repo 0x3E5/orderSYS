@@ -7,7 +7,6 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 
-
 // $route POST api/commodity/add
 // @desc 添加商品信息
 // @access private
@@ -62,7 +61,6 @@ router.post('/get',passport.authenticate('jwt',{session:false}),async (req,res)=
     }
 })
 
-
 // $route POST api/commodity/upload
 // @desc 上传商品照片，返回json数据
 // @access private
@@ -80,25 +78,25 @@ router.post('/upload',passport.authenticate('jwt',{session:false}),(req,res)=>{
 // $route get api/commodity/menu
 // @desc 用户页面获取所有商品信息，返回json数据
 // @access public
-router.get('/menu',(req,res)=>{
-    Category.find().sort({no:1})
-        .then(result=>{
-            let menu = [];
-            for(category of result){
-                menu.push({name:category.cName,type:category.no,foods:[]});
+router.get('/menu',async (req,res)=>{
+    try {
+        const categoryResult = await Category.find().sort({no:1}).exec();
+        let menu = [];
+        for(category of categoryResult){
+            menu.push({name:category.cName,type:category.no,foods:[]});
+        }
+        const commodityResult = await Commodity.find().exec();
+        for(category of menu){
+            for(commodity of commodityResult){
+                if(category.name === commodity.category){
+                    category.foods.push(commodity);
+                }
             }
-            Commodity.find()
-                .then(result2=>{
-                    for(category of menu){
-                        for(commodity of result2){
-                            if(category.name === commodity.category){
-                                category.foods.push(commodity);
-                            }
-                        }
-                    }
-                    res.json(menu)
-                })
-        })
+        }
+        res.json(menu);
+    } catch (err) {
+        console.log(err);
+    }
 })
 
 module.exports = router;

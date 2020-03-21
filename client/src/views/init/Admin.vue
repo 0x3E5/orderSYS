@@ -85,10 +85,7 @@ export default {
               this.$router.push('/init/shop')
             })
             .catch(err => {
-                this.$message({
-                    type: 'error',
-                    message: '初始化管理员失败，请重试！'
-                })
+                console.log(err)
             })
         } else {
           this.$message({

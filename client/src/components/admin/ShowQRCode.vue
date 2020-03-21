@@ -4,7 +4,7 @@
         :title="qrcodeData.title+'号桌二维码'"
         :visible.sync="qrcodeData.visible"
         close-on-click-modal
-        width="30%"
+        width="300px"
         center>
         <img class="qrcodeIMG" :src="qrcodeURL" alt="">
         <span slot="footer" class="dialog-footer">

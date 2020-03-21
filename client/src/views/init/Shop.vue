@@ -80,21 +80,16 @@ export default {
         if (valid) {
           this.$axios.post('/api/shop/create', this.form)
             .then(res => {
-              console.log(res)
               this.$message({
                 message: '店铺信息初始化成功',
                 type: 'success'
               })
-
               this.$axios.post('/api/init/setStat',{ shop: true })
               this.$emit('changeStatus',2)
               this.$router.push('/init/complete')
             })
             .catch(err => {
-                this.$message({
-                    type: 'error',
-                    message: '店铺信息初始化失败，请重试！'
-                })
+                console.log(err)
             })
         } else {
           this.$message({
