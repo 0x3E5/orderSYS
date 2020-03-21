@@ -11,10 +11,10 @@
                         <el-input v-model="form.email"></el-input>
                     </el-form-item>
                     <el-form-item label="原始密码">
-                        <el-input type="password" v-model="form.password"></el-input>
+                        <el-input type="password" v-model="form.password" placeholder="不修改密码可不填写"></el-input>
                     </el-form-item>
                     <el-form-item label="新 密 码 ">
-                        <el-input type="password" v-model="form.newpassword"></el-input>
+                        <el-input type="password" v-model="form.newpassword" placeholder="不修改密码可不填写"></el-input>
                     </el-form-item>
                         <el-button type="primary" class="submitBtn" @click="update">更新信息</el-button>
                 </el-form>

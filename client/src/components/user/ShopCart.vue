@@ -157,9 +157,10 @@ export default {
     }
     .shopcart > .contents{
         display: flex;
-        background: #141d27;
+        background: #fff;
+        border-top: 1px solid #ddd;
         font-size: 0;
-        color: rgba(255,255,255,0.4);
+        color: #333;
     }
     .contents > .content-left{
         flex: 1;
@@ -175,14 +176,16 @@ export default {
         height: 56px;
         box-sizing: border-box;
         border-radius: 50%;
-        background: #141d27;
+        background: #fff;
+        border: 1px solid #ccc;
     }
     .contents > .content-left > .logo-wrapper > .logo{
         width: 100%;
         height: 100%;
         border-radius: 50%;
         text-align: center;
-        background: #2b343c;
+        background: #ccc;
+        color: #fff;
     }
     .contents > .content-left > .logo-wrapper > .logo > i{
         font-size: 30px;
@@ -237,10 +240,11 @@ export default {
         text-align: center;
         font-size: 12px;
         font-weight: 700;
-        background: #2b333b;
+        background: #ccc;
     }
     .contents > .content-right > .pay.not-enough{
-        background: #2b333b;
+        background: #ccc;
+        color: #fff;
     }
     .contents > .content-right > .pay.enough{
         background: #00b43c;

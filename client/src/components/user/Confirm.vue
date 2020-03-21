@@ -9,6 +9,13 @@
             </div>
             <div class="contents">
                 <div class="order-list">
+                    <div class="order-header">
+                        <span class="pic">图片</span>
+                        <span class="name">名称</span>
+                        <span class="count">数量</span>
+                        <span class="on-sale">打折</span>
+                        <span class="price">价格</span>
+                    </div>
                     <ul>
                         <li v-for="item in orderData.order" :key="item._id">
                             <img :src="item.img" width="40px" height="40px" alt="">
@@ -21,7 +28,7 @@
                     <div class="total">总计：<span class="price">￥{{ orderData.totalPrice }}</span></div>
                     <p class="remark">订单备注：</p>
                     <el-input type="textarea" :autosize="{ minRows: 5, maxRows: 5}" v-model="remark" placeholder="请填写备注，如无则忽略"></el-input>
-                    <el-button type="primary" class="submitBtn" @click="submitOrder">确认下单</el-button>
+                    <el-button type="success" class="submitBtn" @click="submitOrder">确认下单</el-button>
                 </div>
             </div>
         </div>
@@ -114,12 +121,34 @@ export default {
     .confirm-order > .contents{
         height: 100%;
         width: 100%;
-        background: #fff;
+        background: #FFF;
         box-sizing: border-box;
         overflow: auto;
     }
     .confirm-order > .contents > .order-list{
         padding: 15px 20px;
+    }
+    .contents > .order-list > .order-header{
+        display: flex;
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+        padding-bottom: 5px;
+        border-bottom: 1px dashed #dddddd;
+        margin-bottom: 10px;
+    }
+    .contents > .order-list > .order-header > .pic{
+        display: block;
+        width: 40px;
+    }
+    .contents > .order-list > .order-header > .name{
+        flex: 2;
+    }
+    .contents > .order-list > .order-header > .count,
+    .contents > .order-list > .order-header > .on-sale,
+    .contents > .order-list > .order-header > .price{
+        text-align: right;
+        flex: 1;
     }
     .contents > .order-list > ul > li{
         margin-bottom: 5px;
@@ -176,5 +205,6 @@ export default {
         width: 100%;
         margin-top: 20px;
         margin-bottom: 40px;
+        box-shadow: 0px 0px 20px rgba(89, 248, 137, 0.562);
     }
 </style>

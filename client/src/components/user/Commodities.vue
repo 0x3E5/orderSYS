@@ -158,7 +158,7 @@ export default {
         height: 40px;
         text-align: center;
         line-height: 40px;
-        color: #F01414;
+        color: #333;
     }
     #commodities > .tab-title::after{
         display: block;
@@ -196,6 +196,16 @@ export default {
         color: #000!important;
         background: #fff;
         font-weight: 700;
+    }
+    .menu-wrapper > ul > .current::before{
+        content: '';
+        position: absolute;
+        height: 30px;
+        width: 3px;
+        background:#297FFF;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
     }
     .goods .text{
         display: table-cell;
