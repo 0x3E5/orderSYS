@@ -59,13 +59,29 @@ router.post('/login',async (req,res)=>{
         const isMatch = bcrypt.compareSync(password,user.password);
         if(isMatch){
             const rules = {id:user.id,username:user.username,email:user.email,avatar:user.avatar};
-            jwt.sign(rules,secretKey,{expiresIn:3600},(err,token)=>{
+            jwt.sign(rules,secretKey,{expiresIn:1800},(err,token)=>{
                 if(err) throw err;
                 res.json({success:true,token:"Bearer "+token});
             })
         }else{
             res.status(400).send('密码错误！');
         }
+    }catch(err){
+        console.log(err);
+    }
+});
+
+// $route GET api/users/authorization
+// @desc 单独获取token，返回json数据
+// @access private
+router.post('/authorization',passport.authenticate('jwt',{session:false}),async (req,res)=>{
+    try{
+        const user = await User.findOne({_id:req.user.id}).exec();
+        const rules = {id:user.id,username:user.username,email:user.email,avatar:user.avatar};
+        jwt.sign(rules,secretKey,{expiresIn:1800},(err,token)=>{
+            if(err) throw err;
+            res.json({success:true,token:"Bearer "+token});
+        })
     }catch(err){
         console.log(err);
     }

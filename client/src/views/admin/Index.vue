@@ -46,7 +46,6 @@ export default {
     }
     .left-container{
         position: absolute;
-        /* float: left; */
         top: 0;
         left: 0;
         width: 224px;

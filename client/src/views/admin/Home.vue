@@ -66,6 +66,7 @@ export default {
                 },
                 xAxis: {
                     type: 'category',
+                    boundaryGap: true,
                     axisTick:{
                         alignWithLabel:true,
                     },
@@ -133,7 +134,7 @@ export default {
                         name: '订单数量',
                         type: 'line',
                         smooth: true,
-                        stack: 'a',
+                        // stack: 'a',
                         symbol: 'circle',
                         symbolSize: 5,
                         sampling: 'average',

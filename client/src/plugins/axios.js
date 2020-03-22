@@ -36,6 +36,12 @@ _axios.interceptors.request.use(
     startLoading()
     if (localStorage.orderTk) {
       config.headers.Authorization = localStorage.orderTk
+      axios.get('/api/users/authorization')
+        .then(res=>{
+          localStorage.setItem('orderTk',res.data.token)
+          console.log('请求了'+res.data.token);
+        })
+        .catch(err=>console.log(err))
     }
     return config
   },
