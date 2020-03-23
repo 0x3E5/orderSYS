@@ -55,29 +55,29 @@
 <script>
 
 export default {
-    data() {
-        return {
-            shopInfo:{
-                shopName:'',
-                shopIntro:'',
-                shopNotice:'',
-                shopImg:''
-            },
-            isShow:false
-        };
-    },
-    methods: {
-        showDetail(){
-            this.isShow = !this.isShow
-        }
-    },
-    created() {
-        this.$axios.get('/api/shop/get')
-            .then(res=>{
-                this.shopInfo = res.data
-            })
+  data () {
+    return {
+      shopInfo: {
+        shopName: '',
+        shopIntro: '',
+        shopNotice: '',
+        shopImg: ''
+      },
+      isShow: false
     }
-};
+  },
+  methods: {
+    showDetail () {
+      this.isShow = !this.isShow
+    }
+  },
+  created () {
+    this.$axios.get('/api/shop/get')
+      .then(res => {
+        this.shopInfo = res.data
+      })
+  }
+}
 </script>
 <style>
     .header{

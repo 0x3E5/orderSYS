@@ -18,7 +18,7 @@
                 <el-input v-model="form.name" autocomplete="off" placeholder="请输入商品名称"></el-input>
             </el-form-item>
             <el-form-item label="商品描述" prop="describe" :label-width="formLabelWidth">
-                <el-input type="textarea" maxlength="50" :autosize="{ minRows: 4, maxRows: 4 }" show-word-limit v-model.number="form.describe" autocomplete="off" placeholder="请输入商品描述"></el-input>            
+                <el-input type="textarea" maxlength="50" :autosize="{ minRows: 4, maxRows: 4 }" show-word-limit v-model.number="form.describe" autocomplete="off" placeholder="请输入商品描述"></el-input>
             </el-form-item>
             <el-form-item label="商品分类" prop="category" :label-width="formLabelWidth">
                 <el-select v-model="form.category" placeholder="请选择">
@@ -30,7 +30,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            
+
             <el-form-item label="商品价格" prop="price" :label-width="formLabelWidth">
                 <el-input type="number" v-model="form.price" autocomplete="off" placeholder="请输入商品价格"></el-input>
             </el-form-item>
@@ -62,85 +62,85 @@
 
 <script>
 export default {
-    name:'categoryDialog',
-    props: {dialog:Object,form:Object,categoryList:Array},
-    data () {
-        return {
-            uploadUrl:'/api/commodity/upload',
-            formLabelWidth: '80px',
-            form_rules:{
-                name:[
-                    {required:true,message:"商品名称不能为空！",trigger:"blur"}
-                ],
-                category:[
-                    {required:true,message:"分类不能为空",trigger:"blur"},
-                ],
-                price:[
-                    {required:true,message:"商品价格不能为空",trigger:"blur"},
-                ],
-                onSale:[
-                    {required:true,message:"折前价格不能为空",trigger:"blur"},
-                ]
-            }
-        }
-    },
-    methods: {
-        submitForm(formName){
-            if (!this.form.img) {
-                this.$message({ type: 'error', message: '商品图片上传失败请重试' })
-                return
-            }
-            this.$refs[formName].validate(valid => {
-                if(valid){
-                    const url = this.dialog.option === 'add' ? '/add' : '/edit'
-                    this.$axios.post('/api/commodity'+url,this.form)
-                        .then(res=>{
-                            this.$message({
-                                type: 'success',
-                                message: res.data
-                            })
-                            this.dialog.show=false;
-                            this.$emit('update');
-                        })
-                }
+  name: 'categoryDialog',
+  props: { dialog: Object, form: Object, categoryList: Array },
+  data () {
+    return {
+      uploadUrl: '/api/commodity/upload',
+      formLabelWidth: '80px',
+      form_rules: {
+        name: [
+          { required: true, message: '商品名称不能为空！', trigger: 'blur' }
+        ],
+        category: [
+          { required: true, message: '分类不能为空', trigger: 'blur' }
+        ],
+        price: [
+          { required: true, message: '商品价格不能为空', trigger: 'blur' }
+        ],
+        onSale: [
+          { required: true, message: '折前价格不能为空', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      if (!this.form.img) {
+        this.$message({ type: 'error', message: '商品图片上传失败请重试' })
+        return
+      }
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const url = this.dialog.option === 'add' ? '/add' : '/edit'
+          this.$axios.post('/api/commodity' + url, this.form)
+            .then(res => {
+              this.$message({
+                type: 'success',
+                message: res.data
+              })
+              this.dialog.show = false
+              this.$emit('update')
             })
-        },
-        beforeImgUpload (file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
+        }
+      })
+    },
+    beforeImgUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
-        if (!isJPG) {
-            this.$message.error('上传图片只能是 JPG 格式!');
-        }
-        if (!isLt2M) {
-            this.$message.error('上传图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-        },
-        uploadSectionFile(params){
-            const file = params.file
-            const form = new FormData();
-            form.append("file", file);
-            this.$axios.post('/api/commodity/upload',form,{
-                headers: {"content-type": "multipart/form-data"}
+      if (!isJPG) {
+        this.$message.error('上传图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    },
+    uploadSectionFile (params) {
+      const file = params.file
+      const form = new FormData()
+      form.append('file', file)
+      this.$axios.post('/api/commodity/upload', form, {
+        headers: { 'content-type': 'multipart/form-data' }
+      })
+        .then(res => {
+          if (res.data.status === 'ok') {
+            this.form.img = res.data.url
+          } else {
+            this.$message({
+              type: 'error',
+              message: '图片上传失败，请重试！'
             })
-                .then(res=>{
-                    if (res.data.status === 'ok') {
-                        this.form.img = res.data.url;
-                    }else{
-                        this.$message({
-                            type:'error',
-                            message:'图片上传失败，请重试！'
-                        })
-                    }
-                })
-                .catch(err=>{
-                    console.log(err);
-                })
-        }
-    },
-    mounted() {
-    },
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+  }
 }
 </script>
 

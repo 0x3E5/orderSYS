@@ -7,7 +7,6 @@
         <router-link to="/login"><el-button class="submitBtn" type="primary">开始使用</el-button></router-link>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
@@ -21,7 +20,7 @@ export default {
   methods: {
   },
   created () {
-    this.$emit('changeStatus',3)
+    this.$emit('changeStatus', 3)
   }
 }
 </script>

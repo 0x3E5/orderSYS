@@ -9,20 +9,20 @@
 import Header from '@/components/user/Header'
 import Commodities from '@/components/user/Commodities'
 export default {
-    name:'userShop',
-    props:['id'],
-    data(){
-        return{
+  name: 'userShop',
+  props: ['id'],
+  data () {
+    return {
 
-        }
-    },
-    methods: {
-        
-    },
-    components:{
-        Header,
-        Commodities,
     }
+  },
+  methods: {
+
+  },
+  components: {
+    Header,
+    Commodities
+  }
 }
 </script>
 

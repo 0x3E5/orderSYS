@@ -23,7 +23,6 @@
                         </template>
                         <router-link v-for="(citem,cindex) in item.children" :to="citem.path" :key="cindex">
                             <el-menu-item :index="citem.path"><span slot="title">{{citem.name}}</span></el-menu-item>
-                            
                         </router-link>
                     </el-submenu>
                 </template>
@@ -34,67 +33,67 @@
 
 <script>
 export default {
-    name:'leftNav',
-    data () {
-      return {
-        items:[
-          {
-            icon:"el-icon-odometer",
-            name:"首页",
-            path:"/admin/home",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-document",
-            name:"订单管理",
-            path:"/admin/order",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-takeaway-box",
-            name:"历史订单",
-            path:"/admin/history",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-receiving",
-            name:"分类管理",
-            path:"/admin/category",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-box",
-            name:"商品管理",
-            path:"/admin/commodity",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-mobile",
-            name:"点餐码管理",
-            path:"/admin/qrcode",
-            isGroup:false
-          },
-          {
-            icon:"el-icon-setting",
-            name:"系统管理",
-            path:"system",
-            isGroup:true,
-            children:[
-              {path:"/admin/shop",name:"店铺信息"},
-              {path:"/admin/user",name:"个人信息"}
-            ]
-          }
-        ]
-      }
-    },
-    computed: {
-      active(){
-        if(location.pathname==='/admin'){
-          return '/admin/home'
+  name: 'leftNav',
+  data () {
+    return {
+      items: [
+        {
+          icon: 'el-icon-odometer',
+          name: '首页',
+          path: '/admin/home',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-document',
+          name: '订单管理',
+          path: '/admin/order',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-takeaway-box',
+          name: '历史订单',
+          path: '/admin/history',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-receiving',
+          name: '分类管理',
+          path: '/admin/category',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-box',
+          name: '商品管理',
+          path: '/admin/commodity',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-mobile',
+          name: '点餐码管理',
+          path: '/admin/qrcode',
+          isGroup: false
+        },
+        {
+          icon: 'el-icon-setting',
+          name: '系统管理',
+          path: 'system',
+          isGroup: true,
+          children: [
+            { path: '/admin/shop', name: '店铺信息' },
+            { path: '/admin/user', name: '个人信息' }
+          ]
         }
-        return location.pathname
+      ]
+    }
+  },
+  computed: {
+    active () {
+      if (location.pathname === '/admin') {
+        return '/admin/home'
       }
-    },
+      return location.pathname
+    }
+  }
 }
 </script>
 

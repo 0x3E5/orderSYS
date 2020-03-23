@@ -9,11 +9,11 @@ const routes = [
     meta: {
       title: '系统登录'
     },
-    redirect: '/login',
+    redirect: '/login'
   },
   {
     path: '/init',
-    component: ()=>import('../views/init/Init'),
+    component: () => import('../views/init/Init'),
     meta: {
       title: '系统初始化'
     },
@@ -21,14 +21,14 @@ const routes = [
       {
         path: '',
         meta: {
-          title: '初始化管理员',
+          title: '初始化管理员'
         },
-        component: ()=>import('../views/init/Admin')
+        component: () => import('../views/init/Admin')
       },
       {
         path: '/init/admin',
         name: 'RegAdmin',
-        component: ()=>import('../views/init/Admin'),
+        component: () => import('../views/init/Admin'),
         meta: {
           title: '初始化管理员'
         }
@@ -36,7 +36,7 @@ const routes = [
       {
         path: '/init/shop',
         name: 'SetShop',
-        component: ()=>import('../views/init/Shop'),
+        component: () => import('../views/init/Shop'),
         meta: {
           title: '设置店铺信息'
         }
@@ -44,7 +44,7 @@ const routes = [
       {
         path: '/init/complete',
         name: 'Complete',
-        component: ()=>import('../views/init/Complete'),
+        component: () => import('../views/init/Complete'),
         meta: {
           title: '初始化完成'
         }
@@ -61,7 +61,7 @@ const routes = [
   },
   {
     path: '/admin',
-    component: ()=>import('../views/admin/Index'),
+    component: () => import('../views/admin/Index'),
     children: [
       {
         path: '',
@@ -145,9 +145,9 @@ const routes = [
     ]
   },
   {
-    path:'/index/:id',
-    name:'UserShop',
-    props:true,
+    path: '/index/:id',
+    name: 'UserShop',
+    props: true,
     meta: {
       title: '在线点餐'
     },
@@ -159,7 +159,7 @@ const routes = [
     meta: {
       title: '出错了'
     },
-    component: ()=>import('../views/404')
+    component: () => import('../views/404')
   }
 ]
 
@@ -169,7 +169,6 @@ const router = new VueRouter({
   routes
 })
 
-
 function setTitle (to) {
   if (to.meta.title) {
     document.title = to.meta.title
@@ -177,13 +176,13 @@ function setTitle (to) {
 }
 
 // 路由守卫
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
   setTitle(to)
-  const isLogin = localStorage.getItem('orderTk')?true:false;
-  if(to.path=="/login" || to.path=="/init" || to.path=="/init/admin" || to.path=="/init/shop" || to.path=="/init/complete" || to.path.startsWith('/index/')){
-    next();
-  }else{
-    isLogin?next():next('/login');
+  const isLogin = !!localStorage.getItem('orderTk')
+  if (to.path == '/login' || to.path == '/init' || to.path == '/init/admin' || to.path == '/init/shop' || to.path == '/init/complete' || to.path.startsWith('/index/')) {
+    next()
+  } else {
+    isLogin ? next() : next('/login')
   }
 })
 

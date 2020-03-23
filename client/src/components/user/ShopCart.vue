@@ -51,98 +51,98 @@ import BScroll from 'better-scroll'
 import CartControl from '@/components/user/CartControl'
 import Confirm from '@/components/user/Confirm'
 export default {
-    name:'shopCart',
-    props: {
-        selectFoods: {
-            type: Array,
-            default () {
-                return [{
-                    price: 0,
-                    count: 0
-                }];
-            }
-        },
-        id:{
-            type:String
-        }
+  name: 'shopCart',
+  props: {
+    selectFoods: {
+      type: Array,
+      default () {
+        return [{
+          price: 0,
+          count: 0
+        }]
+      }
     },
-    data() {
-        return {
-            fold: true,
-            showConfirm:false,
-            orderData:{}
-        }
-    },
-    computed: {
-        totalPrice() {
-            let total = 0;
-            this.selectFoods.forEach((food) => {
-                total += food.price * food.count 
-            });
-            total = Math.round(total * 100) / 100
-            return total;
-        },
-        totalCount() {
-            let count = 0;
-            this.selectFoods.forEach((food) => {
-                count += food.count;
-            });
-            return count;
-        },
-        payClass() {
-            if (this.totalPrice <= 0) {
-                return 'not-enough';
-            } else {
-                return 'enough';
-            }
-        },
-        listShow() {
-            if (!this.totalCount) {
-                this.fold = true;
-                return false;
-            }
-            let show = !this.fold;
-            if (show) {
-                this.$nextTick(() => {
-                    if (!this.scroll) {
-                        this.scroll = new BScroll(this.$refs.listContent, {
-                            click: true
-                        });
-                    } else {
-                        this.scroll.refresh();
-                    }
-                });
-            }
-            return show;
-        }
-    },
-    methods: {
-        toggleList() {
-            if (!this.totalCount) {
-                return;
-            }
-            this.fold = !this.fold;
-        },
-        empty() {
-            this.selectFoods.forEach((food) => {
-                food.count = 0;
-            })
-        },
-        pay() {
-            if (this.totalPrice <= 0) {
-                return;
-            }
-            this.orderData = {deskNo:parseInt(this.id),totalPrice:this.totalPrice,order:this.selectFoods}
-            this.$refs.confirm.show()
-        },
-        hideList() {
-            this.fold = true;
-        }
-    },
-    components: {
-        CartControl,
-        Confirm
+    id: {
+      type: String
     }
+  },
+  data () {
+    return {
+      fold: true,
+      showConfirm: false,
+      orderData: {}
+    }
+  },
+  computed: {
+    totalPrice () {
+      let total = 0
+      this.selectFoods.forEach((food) => {
+        total += food.price * food.count
+      })
+      total = Math.round(total * 100) / 100
+      return total
+    },
+    totalCount () {
+      let count = 0
+      this.selectFoods.forEach((food) => {
+        count += food.count
+      })
+      return count
+    },
+    payClass () {
+      if (this.totalPrice <= 0) {
+        return 'not-enough'
+      } else {
+        return 'enough'
+      }
+    },
+    listShow () {
+      if (!this.totalCount) {
+        this.fold = true
+        return false
+      }
+      const show = !this.fold
+      if (show) {
+        this.$nextTick(() => {
+          if (!this.scroll) {
+            this.scroll = new BScroll(this.$refs.listContent, {
+              click: true
+            })
+          } else {
+            this.scroll.refresh()
+          }
+        })
+      }
+      return show
+    }
+  },
+  methods: {
+    toggleList () {
+      if (!this.totalCount) {
+        return
+      }
+      this.fold = !this.fold
+    },
+    empty () {
+      this.selectFoods.forEach((food) => {
+        food.count = 0
+      })
+    },
+    pay () {
+      if (this.totalPrice <= 0) {
+        return
+      }
+      this.orderData = { deskNo: parseInt(this.id), totalPrice: this.totalPrice, order: this.selectFoods }
+      this.$refs.confirm.show()
+    },
+    hideList () {
+      this.fold = true
+    }
+  },
+  components: {
+    CartControl,
+    Confirm
+  }
 }
 </script>
 
@@ -265,19 +265,19 @@ export default {
         background: rgb(0,160,220);
         transition: all 0.4s linear;
     }
-    
+
     .shopcart > .shopcart-list{
         position: absolute;
-		left: 0px;
-		top: 0px;
-		z-index: -1;
-		width: 100%;
-		transform: translate3d(0,-100%,0);
+        left: 0px;
+        top: 0px;
+        z-index: -1;
+        width: 100%;
+        transform: translate3d(0,-100%,0);
     }
     .shocart > .shopcart-list.fold-enter-active,.shocart > .shopcart-list.fold-leave-active{
         transition: all .5s;
     }
-	.shopcart >.shopcart-list.fold-enter, .shopcart> .shopcart-list.fold-leave-to{
+    .shopcart >.shopcart-list.fold-enter, .shopcart> .shopcart-list.fold-leave-to{
         transform: translate3d(0,0,0);
     }
     .shopcart > .shopcart-list > .list-header{
@@ -353,6 +353,6 @@ export default {
     }
     .list-mask.fade-enter, .list-mask.fade-leave-to{
         opacity: 0;
-		background: rgba(7, 17, 27, 0);
+        background: rgba(7, 17, 27, 0);
     }
 </style>

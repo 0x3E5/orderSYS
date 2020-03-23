@@ -21,7 +21,7 @@
                     <div slot="tip" class="el-upload__tip">(只能上传jpg文件，且不超过2MB)</div>
                     </el-upload>
                 </el-form-item>
-                
+
                 <el-form-item label="店铺名称" prop="shopName">
                     <el-input v-model="form.shopName" placeholder="请输入店铺名称！"></el-input>
                 </el-form-item>
@@ -44,91 +44,91 @@
 
 <script>
 export default {
-    name:'shop',
-    data () {
-        return {
-            uploadUrl:'/api/shop/upload',
-            form: {
-                id: '',
-                shopImg: '',
-                shopName: '',
-                shopIntro: '',
-                shopNotice: ''
-            },
-            rules: {
-                shopName: [
-                { required: true, message: '店铺名称不能为空！', trigger: 'blur' },
-                { min: 2, max: 16, message: '长度在2到16个字符之间！', trigger: 'blur' }
-                ],
-                shopIntro: [
-                { required: true, message: '店铺简介不能为空！', trigger: 'blur' },
-                { min: 10, message: '店铺简介最少为10个字符！', trigger: 'blur' }
-                ],
-                shopNotice: [
-                { required: true, message: '店铺公告不能为空！', trigger: 'blur' },
-                { min: 10, message: '店铺公告最少为10个字符！', trigger: 'blur' }
-                ]
-            }
-        }
-    },
-    methods: {
-        submitForm (formName) {
-            if (!this.form.shopImg) {
-                this.$message({ type: 'error', message: '店铺图片上传失败请重试' })
-                return
-            }
-            this.$refs[formName].validate(valid => {
-                if (valid) {
-                this.$axios.post('/api/shop/edit', this.form)
-                  .then(res => {
-                    this.$message({
-                      message: res.data,
-                      type: 'success'
-                    })
-                  })
-                  .catch(err => {
-                    console.log(err)
-                  })
-                } else {
-                this.$message({
-                    type: 'error',
-                    message: '填写信息有误请重新输入！'
-                })
-                return false
-                }
-            })
-            },
-            handleImgSuccess (res, file) {
-            if (res.status === 'ok') {
-                this.form.shopImg = res.url;
-            }
-            },
-            beforeImgUpload (file) {
-            const isJPG = file.type === 'image/jpeg';
-            const isLt2M = file.size / 1024 / 1024 < 2;
-
-            if (!isJPG) {
-                this.$message.error('上传图片只能是 JPG 格式!');
-            }
-            if (!isLt2M) {
-                this.$message.error('上传图片大小不能超过 2MB!');
-            }
-            return isJPG && isLt2M;
-            }
-    },
-    mounted () {
-        this.$axios.get('/api/shop/get')
+  name: 'shop',
+  data () {
+    return {
+      uploadUrl: '/api/shop/upload',
+      form: {
+        id: '',
+        shopImg: '',
+        shopName: '',
+        shopIntro: '',
+        shopNotice: ''
+      },
+      rules: {
+        shopName: [
+          { required: true, message: '店铺名称不能为空！', trigger: 'blur' },
+          { min: 2, max: 16, message: '长度在2到16个字符之间！', trigger: 'blur' }
+        ],
+        shopIntro: [
+          { required: true, message: '店铺简介不能为空！', trigger: 'blur' },
+          { min: 10, message: '店铺简介最少为10个字符！', trigger: 'blur' }
+        ],
+        shopNotice: [
+          { required: true, message: '店铺公告不能为空！', trigger: 'blur' },
+          { min: 10, message: '店铺公告最少为10个字符！', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    submitForm (formName) {
+      if (!this.form.shopImg) {
+        this.$message({ type: 'error', message: '店铺图片上传失败请重试' })
+        return
+      }
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$axios.post('/api/shop/edit', this.form)
             .then(res => {
-                this.form.id = res.data._id
-                this.form.shopImg = res.data.shopImg
-                this.form.shopName = res.data.shopName
-                this.form.shopIntro = res.data.shopIntro
-                this.form.shopNotice = res.data.shopNotice
+              this.$message({
+                message: res.data,
+                type: 'success'
+              })
             })
-            .catch(err =>{
-                console.log(err)
+            .catch(err => {
+              console.log(err)
             })
+        } else {
+          this.$message({
+            type: 'error',
+            message: '填写信息有误请重新输入！'
+          })
+          return false
+        }
+      })
     },
+    handleImgSuccess (res, file) {
+      if (res.status === 'ok') {
+        this.form.shopImg = res.url
+      }
+    },
+    beforeImgUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isJPG) {
+        this.$message.error('上传图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 2MB!')
+      }
+      return isJPG && isLt2M
+    }
+  },
+  mounted () {
+    this.$axios.get('/api/shop/get')
+      .then(res => {
+        this.form.id = res.data._id
+        this.form.shopImg = res.data.shopImg
+        this.form.shopName = res.data.shopName
+        this.form.shopIntro = res.data.shopIntro
+        this.form.shopNotice = res.data.shopNotice
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 </script>
 

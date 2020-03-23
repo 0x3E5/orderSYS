@@ -10,7 +10,7 @@
                     v-model="search">
                 </el-input>
             </el-col>
-            
+
             <el-button type="primary" size="small" class="btn-shadow" @click="addTableNum()">添加桌号</el-button>
         </el-row>
         <el-row class="row-height">
@@ -62,79 +62,79 @@
 import TableNumDialog from '../../components/admin/TableNumDialog'
 import ShowQRCode from '../../components/admin/ShowQRCode'
 export default {
-    name:'qrCode',
-    data(){
-        return{
-            dialog: {
-                show: false,
-                title: '添加餐桌号码'
-            },
-            form: {
-                url: '',
-                no: '',
-            },
-            qrcodeData:{
-                title:'',
-                visible:false,
-            },
-            tableData: [],
-            tableHeight:window.innerHeight-142,
-            search:''
-        }
-    },
-    methods:{
-        loadData () {
-            this.$axios.get('/api/qrcode/all')
-            .then(res => {
-                this.tableData = res.data
-            })
-            .catch(err => console.log(err))
-        },
-        addTableNum () {
-            this.dialog = {
-                show: true,
-                title: '添加餐桌号码'
-            }
-            this.form ={
-                url:document.URL.split('/admin/qrcode')[0],
-                no:''
-            }
-        },
-        delTableNum (row) {
-            this.$confirm(`确认删除桌号 “${row.no}” 吗？`)
-            .then(_ => {
-                this.$axios.post('/api/qrcode/del',{_id:row._id})
-                .then(result=>{
-                    this.$message({
-                        type:'success',
-                        message: result.data
-                    })
-                    this.loadData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-            })
-            .catch(_ => {});
-        },
-        qrcode(row){
-            this.qrcodeData={
-                title:row.no,
-                visible:true
-            }
-            this.$refs.showQRCode.drawQRCode(row.url);
-        }
-    },
-    created() {
-        this.loadData()
-        window.onresize=()=>{
-            this.tableHeight = window.innerHeight-142;
-        }
-    },
-    components:{
-        TableNumDialog,
-        ShowQRCode
+  name: 'qrCode',
+  data () {
+    return {
+      dialog: {
+        show: false,
+        title: '添加餐桌号码'
+      },
+      form: {
+        url: '',
+        no: ''
+      },
+      qrcodeData: {
+        title: '',
+        visible: false
+      },
+      tableData: [],
+      tableHeight: window.innerHeight - 142,
+      search: ''
     }
+  },
+  methods: {
+    loadData () {
+      this.$axios.get('/api/qrcode/all')
+        .then(res => {
+          this.tableData = res.data
+        })
+        .catch(err => console.log(err))
+    },
+    addTableNum () {
+      this.dialog = {
+        show: true,
+        title: '添加餐桌号码'
+      }
+      this.form = {
+        url: document.URL.split('/admin/qrcode')[0],
+        no: ''
+      }
+    },
+    delTableNum (row) {
+      this.$confirm(`确认删除桌号 “${row.no}” 吗？`)
+        .then(_ => {
+          this.$axios.post('/api/qrcode/del', { _id: row._id })
+            .then(result => {
+              this.$message({
+                type: 'success',
+                message: result.data
+              })
+              this.loadData()
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(_ => {})
+    },
+    qrcode (row) {
+      this.qrcodeData = {
+        title: row.no,
+        visible: true
+      }
+      this.$refs.showQRCode.drawQRCode(row.url)
+    }
+  },
+  created () {
+    this.loadData()
+    window.onresize = () => {
+      this.tableHeight = window.innerHeight - 142
+    }
+  },
+  components: {
+    TableNumDialog,
+    ShowQRCode
+  }
 }
 </script>
 

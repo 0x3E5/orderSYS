@@ -10,7 +10,7 @@
                     v-model="search">
                 </el-input>
             </el-col>
-            
+
             <el-button type="primary" size="small" class="btn-shadow" @click="addCategory()">添加分类</el-button>
         </el-row>
         <el-row class="row-height">
@@ -53,78 +53,78 @@
 <script>
 import CategoryDialog from '@/components/admin/CategoryDialog'
 export default {
-    name: 'category',
-    data () {
-        return {
-            dialog: {
-                show: false,
-                title: '',
-                option: 'add'
-            },
-            form: {
-                id: '',
-                cName: '',
-                no: '',
-            },
-            tableData: [],
-            tableHeight:window.innerHeight-142,
-            search:''
-        }
-    },
-    methods: {
-        loadData () {
-            this.$axios.get('/api/category/all')
-            .then(res => {
-                this.tableData = res.data
-            })
-            .catch(err => console.log(err))
-        },
-        addCategory () {
-            this.dialog = {
-                show: true,
-                title: '添加分类',
-                option: 'add'
-            }
-            this.form ={
-                cName:'',
-                no:''
-            }
-        },
-        editCategory (row) {
-            this.dialog = {
-                show: true,
-                title: '编辑分类',
-                option: 'edit'
-            }
-            this.form = row
-        },
-        delCategory (row) {
-            this.$confirm(`确认删除分类 “${row.cName}” 吗？`)
-            .then(_ => {
-                this.$axios.post('/api/category/del',{_id:row._id})
-                .then(result=>{
-                    this.$message({
-                        type:'success',
-                        message: result.data
-                    })
-                    this.loadData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-            })
-            .catch(_ => {});
-        },
-    },
-    created () {
-        this.loadData()
-        window.onresize=()=>{
-            this.tableHeight = window.innerHeight-142;
-        }
-    },
-    components: {
-        CategoryDialog
+  name: 'category',
+  data () {
+    return {
+      dialog: {
+        show: false,
+        title: '',
+        option: 'add'
+      },
+      form: {
+        id: '',
+        cName: '',
+        no: ''
+      },
+      tableData: [],
+      tableHeight: window.innerHeight - 142,
+      search: ''
     }
+  },
+  methods: {
+    loadData () {
+      this.$axios.get('/api/category/all')
+        .then(res => {
+          this.tableData = res.data
+        })
+        .catch(err => console.log(err))
+    },
+    addCategory () {
+      this.dialog = {
+        show: true,
+        title: '添加分类',
+        option: 'add'
+      }
+      this.form = {
+        cName: '',
+        no: ''
+      }
+    },
+    editCategory (row) {
+      this.dialog = {
+        show: true,
+        title: '编辑分类',
+        option: 'edit'
+      }
+      this.form = row
+    },
+    delCategory (row) {
+      this.$confirm(`确认删除分类 “${row.cName}” 吗？`)
+        .then(_ => {
+          this.$axios.post('/api/category/del', { _id: row._id })
+            .then(result => {
+              this.$message({
+                type: 'success',
+                message: result.data
+              })
+              this.loadData()
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(_ => {})
+    }
+  },
+  created () {
+    this.loadData()
+    window.onresize = () => {
+      this.tableHeight = window.innerHeight - 142
+    }
+  },
+  components: {
+    CategoryDialog
+  }
 }
 </script>
 <style scoped>

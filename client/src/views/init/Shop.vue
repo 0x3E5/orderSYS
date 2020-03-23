@@ -20,7 +20,6 @@
               <div slot="tip" class="el-upload__tip">(只能上传jpg文件，且不超过2MB)</div>
             </el-upload>
           </el-form-item>
-          
           <el-form-item label="店铺名称" prop="shopName">
             <el-input v-model="form.shopName" placeholder="请输入店铺名称！"></el-input>
           </el-form-item>
@@ -47,7 +46,7 @@ export default {
   name: 'shop',
   data () {
     return {
-      uploadUrl:'/api/shop/upload',
+      uploadUrl: '/api/shop/upload',
       form: {
         shopImg: '',
         shopName: '',
@@ -84,17 +83,17 @@ export default {
                 message: '店铺信息初始化成功',
                 type: 'success'
               })
-              this.$axios.post('/api/init/setStat',{ shop: true })
-              this.$emit('changeStatus',2)
+              this.$axios.post('/api/init/setStat', { shop: true })
+              this.$emit('changeStatus', 2)
               this.$router.push('/init/complete')
             })
             .catch(err => {
-                console.log(err)
+              console.log(err)
             })
         } else {
           this.$message({
-              type: 'error',
-              message: '填写信息有误请重新输入！'
+            type: 'error',
+            message: '填写信息有误请重新输入！'
           })
           return false
         }
@@ -102,39 +101,39 @@ export default {
     },
     handleImgSuccess (res, file) {
       if (res.status === 'ok') {
-        this.form.shopImg = res.url;
+        this.form.shopImg = res.url
       }
     },
     beforeImgUpload (file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error('上传图片只能是 JPG 格式!');
+        this.$message.error('上传图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 2MB!');
+        this.$message.error('上传图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     }
   },
   created () {
-    this.$emit('changeStatus',1)
+    this.$emit('changeStatus', 1)
     this.$axios.get('/api/init/getStat')
-        .then(result=>{
-          const status = result.data;
-          if (!status.admin) {
-            this.$emit('changeStatus',0)
-            this.$router.push('/init/admin')
-          } else if (status.shop) {
-            this.$emit('changeStatus',3)
-            this.$router.push('/init/complete')
-          }
-        })
-        .catch(err=>{
-          console.log(err)
-        })
-  },
+      .then(result => {
+        const status = result.data
+        if (!status.admin) {
+          this.$emit('changeStatus', 0)
+          this.$router.push('/init/admin')
+        } else if (status.shop) {
+          this.$emit('changeStatus', 3)
+          this.$router.push('/init/complete')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 </script>
 

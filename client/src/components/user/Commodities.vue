@@ -50,105 +50,105 @@ import ShopCart from '@/components/user/ShopCart'
 import CartControl from '@/components/user/CartControl'
 import CommodityDetail from '@/components/user/CommodityDetail'
 export default {
-    name:'commoditiesList',
-    props:['id'],
-    data(){
-        return {
-            goods:[],
-            listHeight:[],
-            scrollY: 0,
-            drop: [],
-            selectedFood: {},
-            showConfirm:false,
-        }
-    },
-    methods: {
-        selectMenu(index, event) {
-            // 把原生自带的click事件过滤掉
-            if (!event._constructed) {
-                return;
-            }
-            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
-            let el = foodList[index];
-            this.foodScroll.scrollToElement(el, 300);
-        },
-        selectFood(food, event) {
-            if (!event._constructed) {
-                return;
-            }
-            this.selectedFood = food;
-            this.$refs.detail.show();
-        },
-        _initScroll() {
-            this.meunScroll = new BScroll(this.$refs.menuWrapper, {
-                click: true
-            });
-            this.foodScroll = new BScroll(this.$refs.foodsWrapper, {
-                click: true,
-                probeType: 3
-            });
-            this.foodScroll.on('scroll', (pos) => {
-                if (pos.y <= 0) {
-                    this.scrollY = Math.abs(Math.round(pos.y));
-                }
-            });
-        },
-        _calculateHeight() {
-            let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook');
-            let height = 0;
-            this.listHeight.push(height);
-            for (let i = 0; i < foodList.length; i++) {
-                let item = foodList[i];
-                height += item.clientHeight;
-                this.listHeight.push(height);
-            }
-        },
-        _followScroll(index) {
-            let menuList = this.$refs.menuList;
-            let el = menuList[index];
-            this.meunScroll.scrollToElement(el, 300, 0, -100);
-        }
-    },
-    computed: {
-        currentIndex() {
-            for (let i = 0; i < this.listHeight.length; i++) {
-                let height1 = this.listHeight[i];
-                let height2 = this.listHeight[i + 1];
-                if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-                    this._followScroll(i);
-                    return i;
-                }
-            }
-            return 0;
-        },
-        selectFoods() {
-            let foods = [];
-            this.goods.forEach((good) => {
-                good.foods.forEach((food) => {
-                    if (food.count) {
-                        foods.push(food);
-                    }
-                });
-            });
-            return foods;
-        }
-    },
-    created() {
-        this.$axios.get('/api/commodity/menu')
-            .then(res=>{
-                this.goods = res.data
-                this.$nextTick(() => {
-                    this._initScroll();
-                    this._calculateHeight();
-                })
-            })
-            .catch(err => console.log(err))
-    },
-    components:{
-        ShopCart,
-        CartControl,
-        CommodityDetail
+  name: 'commoditiesList',
+  props: ['id'],
+  data () {
+    return {
+      goods: [],
+      listHeight: [],
+      scrollY: 0,
+      drop: [],
+      selectedFood: {},
+      showConfirm: false
     }
+  },
+  methods: {
+    selectMenu (index, event) {
+      // 把原生自带的click事件过滤掉
+      if (!event._constructed) {
+        return
+      }
+      const foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+      const el = foodList[index]
+      this.foodScroll.scrollToElement(el, 300)
+    },
+    selectFood (food, event) {
+      if (!event._constructed) {
+        return
+      }
+      this.selectedFood = food
+      this.$refs.detail.show()
+    },
+    _initScroll () {
+      this.meunScroll = new BScroll(this.$refs.menuWrapper, {
+        click: true
+      })
+      this.foodScroll = new BScroll(this.$refs.foodsWrapper, {
+        click: true,
+        probeType: 3
+      })
+      this.foodScroll.on('scroll', (pos) => {
+        if (pos.y <= 0) {
+          this.scrollY = Math.abs(Math.round(pos.y))
+        }
+      })
+    },
+    _calculateHeight () {
+      const foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook')
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < foodList.length; i++) {
+        const item = foodList[i]
+        height += item.clientHeight
+        this.listHeight.push(height)
+      }
+    },
+    _followScroll (index) {
+      const menuList = this.$refs.menuList
+      const el = menuList[index]
+      this.meunScroll.scrollToElement(el, 300, 0, -100)
+    }
+  },
+  computed: {
+    currentIndex () {
+      for (let i = 0; i < this.listHeight.length; i++) {
+        const height1 = this.listHeight[i]
+        const height2 = this.listHeight[i + 1]
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          this._followScroll(i)
+          return i
+        }
+      }
+      return 0
+    },
+    selectFoods () {
+      const foods = []
+      this.goods.forEach((good) => {
+        good.foods.forEach((food) => {
+          if (food.count) {
+            foods.push(food)
+          }
+        })
+      })
+      return foods
+    }
+  },
+  created () {
+    this.$axios.get('/api/commodity/menu')
+      .then(res => {
+        this.goods = res.data
+        this.$nextTick(() => {
+          this._initScroll()
+          this._calculateHeight()
+        })
+      })
+      .catch(err => console.log(err))
+  },
+  components: {
+    ShopCart,
+    CartControl,
+    CommodityDetail
+  }
 }
 </script>
 

@@ -40,7 +40,7 @@ export default {
   name: 'topNav',
   data () {
     return {
-        show:true
+      show: true
     }
   },
   methods: {
@@ -61,9 +61,9 @@ export default {
       this.$store.dispatch('clearCurrentState')
       this.$router.push('/login')
     },
-    toggleLeft(){
-        this.$emit('toggleLeft')
-        this.show = !this.show
+    toggleLeft () {
+      this.$emit('toggleLeft')
+      this.show = !this.show
     }
   },
   computed: {
@@ -71,21 +71,24 @@ export default {
       return this.$store.getters.getUser
     }
   },
-  sockets:{
-    playAudio(){
-        this.$refs.ding.play()
-        this.$notify({
-          title: '您有新的订单',
-          message: '请前往订单管理页面查看！',
-          type: 'success',
-          offset:60
-        })
-    }
+  destroyed () {
+    console.clear()
   },
+  sockets: {
+    playAudio () {
+      this.$refs.ding.play()
+      this.$notify({
+        title: '您有新的订单',
+        message: '请前往订单管理页面查看！',
+        type: 'success',
+        offset: 60
+      })
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style>
     *{
         margin: 0;
         padding: 0;

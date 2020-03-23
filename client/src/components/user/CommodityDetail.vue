@@ -38,43 +38,43 @@
 import BScroll from 'better-scroll'
 import CartControl from '@/components/user/CartControl'
 export default {
-    name:'commodityDetail',
-    props: {
-        food: {
-            type: Object
-        }
-    },
-    data() {
-        return {
-            showFlag: false,
-        }
-    },
-    methods: {
-        show() {
-            this.showFlag = true;
-            this.$nextTick(() => {
-                if (!this.scroll) {
-                    this.scroll = new BScroll(this.$el, {
-                        click: true
-                    });
-                } else {
-                    this.scroll.refresh();
-                }
-            });
-        },
-        hide() {
-            this.showFlag = false;
-        },
-        addFirst(event) {
-            if (!event._constructed) {
-                return;
-            }
-            this.$set(this.food, 'count', 1);
-        }
-    },
-    components: {
-        CartControl,
+  name: 'commodityDetail',
+  props: {
+    food: {
+      type: Object
     }
+  },
+  data () {
+    return {
+      showFlag: false
+    }
+  },
+  methods: {
+    show () {
+      this.showFlag = true
+      this.$nextTick(() => {
+        if (!this.scroll) {
+          this.scroll = new BScroll(this.$el, {
+            click: true
+          })
+        } else {
+          this.scroll.refresh()
+        }
+      })
+    },
+    hide () {
+      this.showFlag = false
+    },
+    addFirst (event) {
+      if (!event._constructed) {
+        return
+      }
+      this.$set(this.food, 'count', 1)
+    }
+  },
+  components: {
+    CartControl
+  }
 }
 </script>
 

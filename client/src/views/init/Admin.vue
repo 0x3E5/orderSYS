@@ -80,17 +80,17 @@ export default {
                 message: '管理员初始化成功',
                 type: 'success'
               })
-              this.$axios.post('/api/init/setStat',{ admin: true })
+              this.$axios.post('/api/init/setStat', { admin: true })
               this.$emit('changeStatus')
               this.$router.push('/init/shop')
             })
             .catch(err => {
-                console.log(err)
+              console.log(err)
             })
         } else {
           this.$message({
-              type: 'error',
-              message: '填写信息有误请重新输入！'
+            type: 'error',
+            message: '填写信息有误请重新输入！'
           })
           return false
         }
@@ -98,18 +98,18 @@ export default {
     }
   },
   created () {
-    this.$emit('changeStatus',0)
+    this.$emit('changeStatus', 0)
     this.$axios.get('/api/init/getStat')
-        .then(result=>{
-          const status = result.data;
-          if (status.admin) {
-            this.$emit('changeStatus',1)
-            this.$router.push('/init/shop')
-          }
-        })
-        .catch(err=>{
-          console.log(err)
-        })
+      .then(result => {
+        const status = result.data
+        if (status.admin) {
+          this.$emit('changeStatus', 1)
+          this.$router.push('/init/shop')
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>

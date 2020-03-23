@@ -5,15 +5,15 @@ import axios from 'axios'
 import { Message, Loading } from 'element-ui'
 import router from '../router/index'
 
-let loading;
-function startLoading(){
+let loading
+function startLoading () {
   loading = Loading.service({
-      lock:true,
-      text:'拼命加载中...',
-      background:'rgba(0,0,0,0.7)'
+    lock: true,
+    text: '拼命加载中...',
+    background: 'rgba(0,0,0,0.7)'
   })
 }
-function endLoading(){
+function endLoading () {
   loading.close()
 }
 

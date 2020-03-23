@@ -37,44 +37,43 @@
 
 <script>
 export default {
-    name:'confirmOrder',
-    props:{
-        orderData:{
-            type:Object
-        }
+  name: 'confirmOrder',
+  props: {
+    orderData: {
+      type: Object
+    }
+  },
+  data () {
+    return {
+      showConfirm: false,
+      remark: ''
+    }
+  },
+  methods: {
+    show () {
+      this.showConfirm = true
     },
-    data(){
-        return{
-            showConfirm:false,
-            remark:'',
-        }
+    hide () {
+      this.showConfirm = false
     },
-    methods: {
-        show(){
-            this.showConfirm = true
-        },
-        hide(){
-            this.showConfirm = false
-        },
-        submitOrder(){
-            this.orderData.remark = this.remark
-            this.$axios.post('/api/order/submit',this.orderData)
-                .then(res=>{
-                    this.showConfirm = false
-                    this.$socket.emit('submitOrder')
-                    this.$emit('clear')
-                    this.remark=''
-                    this.$message({
-                        type:'success',
-                        message:'下单成功店家正在处理您的订单请耐心等待...'
-                    })
-                })
-                .catch(err=>{
+    submitOrder () {
+      this.orderData.remark = this.remark
+      this.$axios.post('/api/order/submit', this.orderData)
+        .then(res => {
+          this.showConfirm = false
+          this.$socket.emit('submitOrder')
+          this.$emit('clear')
+          this.remark = ''
+          this.$message({
+            type: 'success',
+            message: '下单成功店家正在处理您的订单请耐心等待...'
+          })
+        })
+        .catch(err => {
 
-                })
-
-        }
-    },
+        })
+    }
+  }
 }
 </script>
 
@@ -94,7 +93,7 @@ export default {
         width: 100%;
         height: 100%;
         background:#F0F0F0;
-    }       
+    }
     .confirm-order > .header{
         background:rgb(0,160,220);
         height: 45px;

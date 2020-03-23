@@ -67,7 +67,7 @@
                 fixed="right"
                 width="80"
                 label="订单状态">
-                    <template slot-scope="scope">    
+                    <template slot-scope="scope">
                         <el-tag
                         :type="scope.row.state === 0 ? 'primary' : 'success'"
                         disable-transitions>
@@ -93,89 +93,89 @@
             </el-table>
             </el-col>
         </el-row>
-        
+
     </div>
 </template>
 
 <script>
 export default {
-    name:'order',
-    data(){
-        return{
-            tableData:[],
-            tableHeight:window.innerHeight - 105
-        }
-    },
-    methods:{
-        finish(data){
-            this.$axios.post('/api/order/finish',{_id:data._id})
-                .then(res=>{
-                    this.$message({
-                        type:'success',
-                        message:'订单已完成！'
-                    })
-                    this.statisticData(data)
-                    this.initTableData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-        },
-        cancel(data){
-            this.$axios.post('/api/order/cancel',{_id:data._id})
-                .then(res=>{
-                    this.$message({
-                        type:'success',
-                        message:'订单已取消！'
-                    })
-                    this.initTableData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-        },
-        async statisticData(data){
-            try{
-                await this.$axios.post('/api/statistic/submit',{date:data.date,income:data.totalPrice})
-            }catch(err){
-                console.log(err)
-            }
-        },
-        initTableData(){
-            this.$axios.get('/api/order/unfinished')
-            .then(res=>{
-                this.tableData = res.data
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        }
-    },
-    mounted() {
-        this.initTableData()
-        window.onresize = ()=>{
-            this.tableHeight=window.innerHeight - 105
-        }
-    },
-    sockets:{
-        checkOrder(){
-            this.initTableData()
-        }
-    },
-    filters:{
-        orderList(order){
-            let orderData = ''
-            order.forEach(el=>{
-                orderData+=`${el.name}x${el.count} `
-            })
-            return orderData
-        },
-        formatDate(time){
-            let date = new Date(time)
-            let date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-            return date_value
-        }
+  name: 'order',
+  data () {
+    return {
+      tableData: [],
+      tableHeight: window.innerHeight - 105
     }
+  },
+  methods: {
+    finish (data) {
+      this.$axios.post('/api/order/finish', { _id: data._id })
+        .then(res => {
+          this.$message({
+            type: 'success',
+            message: '订单已完成！'
+          })
+          this.statisticData(data)
+          this.initTableData()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    cancel (data) {
+      this.$axios.post('/api/order/cancel', { _id: data._id })
+        .then(res => {
+          this.$message({
+            type: 'success',
+            message: '订单已取消！'
+          })
+          this.initTableData()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    async statisticData (data) {
+      try {
+        await this.$axios.post('/api/statistic/submit', { date: data.date, income: data.totalPrice })
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    initTableData () {
+      this.$axios.get('/api/order/unfinished')
+        .then(res => {
+          this.tableData = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    this.initTableData()
+    window.onresize = () => {
+      this.tableHeight = window.innerHeight - 105
+    }
+  },
+  sockets: {
+    checkOrder () {
+      this.initTableData()
+    }
+  },
+  filters: {
+    orderList (order) {
+      let orderData = ''
+      order.forEach(el => {
+        orderData += `${el.name}x${el.count} `
+      })
+      return orderData
+    },
+    formatDate (time) {
+      const date = new Date(time)
+      const date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+      return date_value
+    }
+  }
 }
 </script>
 

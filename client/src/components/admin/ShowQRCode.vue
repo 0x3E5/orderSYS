@@ -17,20 +17,20 @@
 <script>
 import QRCode from 'qrcode'
 export default {
-    name:'showQRCode',
-    props:{qrcodeData:Object},
-    data(){
-        return {
-            qrcodeURL:''
-        }
-    },
-    methods:{
-        drawQRCode(data){
-            QRCode.toDataURL(data, (err, url) => {
-                this.qrcodeURL=url
-            })
-        }
+  name: 'showQRCode',
+  props: { qrcodeData: Object },
+  data () {
+    return {
+      qrcodeURL: ''
     }
+  },
+  methods: {
+    drawQRCode (data) {
+      QRCode.toDataURL(data, (err, url) => {
+        this.qrcodeURL = url
+      })
+    }
+  }
 }
 </script>
 

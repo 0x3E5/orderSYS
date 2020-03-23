@@ -25,50 +25,50 @@
 
 <script>
 export default {
-    name:'user',
-    data () {
-        return {
-            form: {
-                id: '',
-                avatar:'',
-                username: '',
-                email: '',
-                password: '',
-                newpassword: ''
-            }
-        }
-    },
-    methods: {
-        update () {
-            this.$axios.post('/api/users/chinfo',this.form)
-                .then(res => {
-                    if (res.data === '密码修改成功,请重新登录！') {
-                        localStorage.removeItem('orderTk')
-                        this.$store.dispatch('clearCurrentState')
-                        this.$message({
-                            type:'success',
-                            message: res.data
-                        })
-                        this.$router.push('/login')
-                    } else {
-                        this.$axios.get('/api/users/authorization')
-                            .then(res=>{
-                                localStorage.setItem('orderTk',res.data.token)
-                            })
-                        this.$message({
-                            type:'success',
-                            message: res.data
-                        })
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        }
-    },
-    created () {
-        this.form = this.$store.getters.getUser
-    },
+  name: 'user',
+  data () {
+    return {
+      form: {
+        id: '',
+        avatar: '',
+        username: '',
+        email: '',
+        password: '',
+        newpassword: ''
+      }
+    }
+  },
+  methods: {
+    update () {
+      this.$axios.post('/api/users/chinfo', this.form)
+        .then(res => {
+          if (res.data === '密码修改成功,请重新登录！') {
+            localStorage.removeItem('orderTk')
+            this.$store.dispatch('clearCurrentState')
+            this.$message({
+              type: 'success',
+              message: res.data
+            })
+            this.$router.push('/login')
+          } else {
+            this.$axios.get('/api/users/authorization')
+              .then(res => {
+                localStorage.setItem('orderTk', res.data.token)
+              })
+            this.$message({
+              type: 'success',
+              message: res.data
+            })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created () {
+    this.form = this.$store.getters.getUser
+  }
 }
 </script>
 

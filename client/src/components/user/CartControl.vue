@@ -11,32 +11,32 @@
 </template>
 <script>
 export default {
-    props: {
-        food: {
-            type: Object
-        }
-    },
-    methods: {
-        addCart(event) {
-            if (!event._constructed) {
-                return;
-            }
-            if (!this.food.count) {
-                this.$set(this.food, 'count', 1);
-            } else {
-                this.food.count++;
-            }
-        },
-        decreaseCart(event) {
-            if (!event._constructed) {
-                return;
-            }
-            if (this.food.count) {
-                this.food.count--;
-            }
-        }
+  props: {
+    food: {
+      type: Object
     }
-};
+  },
+  methods: {
+    addCart (event) {
+      if (!event._constructed) {
+        return
+      }
+      if (!this.food.count) {
+        this.$set(this.food, 'count', 1)
+      } else {
+        this.food.count++
+      }
+    },
+    decreaseCart (event) {
+      if (!event._constructed) {
+        return
+      }
+      if (this.food.count) {
+        this.food.count--
+      }
+    }
+  }
+}
 </script>
 <style>
 .cartcontrol{
@@ -53,14 +53,14 @@ export default {
     font-size: 24px;
     color: rgb(0,160,220);
 }
-			
+
 .cartcontrol .cart-decrease.move-enter-active, .cartcontrol .cart-decrease.move-leave-active{
     transition: all .4s linear;
-}		
+}
 .cartcontrol .cart-decrease.move-enter, .cartcontrol .cart-decrease.move-leave-to{
     opacity: 1;
     transform: translate3d(24px,0,0) rotate(180deg);
-}		
+}
 .cartcontrol > .cart-count{
     display: inline-block;
     vertical-align: top;
@@ -70,7 +70,7 @@ export default {
     text-align: center;
     font-size: 10px;
     color: rgb(147,153,159);
-}		
+}
 .cartcontrol > .cart-add{
     display: inline-block;
     padding: 6px;

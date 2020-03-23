@@ -87,7 +87,7 @@
                 fixed="right"
                 width="80"
                 label="订单状态">
-                    <template slot-scope="scope">    
+                    <template slot-scope="scope">
                         <el-tag
                         :type="scope.row.state === 0 ? 'primary' : 'success'"
                         disable-transitions>
@@ -131,78 +131,78 @@
 
 <script>
 export default {
-    name:'history',
-    data(){
-        return{
-            tableData:[],
-            tableHeight:window.innerHeight-184,
-            search:'',
-            paginations:{
-                page_index:1,
-                total:0,
-                page_size:5,
-                page_sizes:[5,10,15,20],
-                layout:'total, sizes, prev, pager, next, jumper'
-            }
-        }
-    },
-    methods:{
-        handleSizeChange(val) {
-            this.paginations.page_size = val
-            this.initTableData()
-        },
-        handleCurrentChange(val) {
-            this.initTableData()
-        },
-        del(data){
-            this.$axios.post('/api/order/cancel',{_id:data._id})
-                .then(res=>{
-                    this.$message({
-                        type:'success',
-                        message:'订单已删除！'
-                    })
-                    this.initTableData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-        },
-        initTableData(){
-            let page = {
-                index:this.paginations.page_index,
-                size:this.paginations.page_size,
-                search:this.search
-            }
-            this.$axios.post('/api/order/finished',page)
-            .then(res=>{
-                this.tableData = res.data.result
-                this.paginations.total = res.data.total
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        }
-    },
-    mounted() {
-        this.initTableData()
-        window.onresize=()=>{
-            this.tableHeight = window.innerHeight - 184
-        }
-    },
-    filters:{
-        orderList(order){
-            let orderData = ''
-            order.forEach(el=>{
-                orderData+=`${el.name}x${el.count} `
-            })
-            return orderData
-        },
-        formatDate(time){
-            let date = new Date(time)
-            let date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
-            return date_value
-        }
+  name: 'history',
+  data () {
+    return {
+      tableData: [],
+      tableHeight: window.innerHeight - 184,
+      search: '',
+      paginations: {
+        page_index: 1,
+        total: 0,
+        page_size: 5,
+        page_sizes: [5, 10, 15, 20],
+        layout: 'total, sizes, prev, pager, next, jumper'
+      }
     }
+  },
+  methods: {
+    handleSizeChange (val) {
+      this.paginations.page_size = val
+      this.initTableData()
+    },
+    handleCurrentChange (val) {
+      this.initTableData()
+    },
+    del (data) {
+      this.$axios.post('/api/order/cancel', { _id: data._id })
+        .then(res => {
+          this.$message({
+            type: 'success',
+            message: '订单已删除！'
+          })
+          this.initTableData()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    initTableData () {
+      const page = {
+        index: this.paginations.page_index,
+        size: this.paginations.page_size,
+        search: this.search
+      }
+      this.$axios.post('/api/order/finished', page)
+        .then(res => {
+          this.tableData = res.data.result
+          this.paginations.total = res.data.total
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    this.initTableData()
+    window.onresize = () => {
+      this.tableHeight = window.innerHeight - 184
+    }
+  },
+  filters: {
+    orderList (order) {
+      let orderData = ''
+      order.forEach(el => {
+        orderData += `${el.name}x${el.count} `
+      })
+      return orderData
+    },
+    formatDate (time) {
+      const date = new Date(time)
+      const date_value = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+      return date_value
+    }
+  }
 }
 </script>
 

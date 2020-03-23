@@ -12,7 +12,7 @@
                     clearable>
                 </el-input>
             </el-col>
-            
+
             <el-button type="primary" size="small" class="btn-shadow" @click="addCommodity()">添加商品</el-button>
         </el-row>
         <el-row class="row-height">
@@ -65,7 +65,7 @@
                 </el-pagination>
             </el-col>
         </el-row>
-        
+
         <CommodityDialog :dialog="dialog" :categoryList="categoryList" :form ="form" @update="loadData" ></CommodityDialog>
     </div>
 </template>
@@ -73,111 +73,111 @@
 <script>
 import CommodityDialog from '@/components/admin/CommodityDialog'
 export default {
-    name: 'cmmodity',
-    data () {
-        return {
-            dialog: {
-                show: false,
-                title: '',
-                option: 'add'
-            },
-            form: {
-                img:'',
-                name:'',
-                describe:'',
-                category:'',
-                price:0,
-                isDiscount:false,
-                onSale:0,
-                soldOut:false
-            },
-            tableData: [],
-            tableHeight:window.innerHeight-194,
-            categoryList:[],
-            search:'',
-            suggests:[],
-            paginations:{
-                page_index:1,
-                total:0,
-                page_size:5,
-                page_sizes:[5,10,15,20],
-                layout:'total, sizes, prev, pager, next, jumper'
-            }
-        }
-    },
-    methods: {
-        handleSizeChange(val) {
-            this.paginations.page_size = val
-            this.loadData()
-        },
-        handleCurrentChange(val) {
-            this.loadData()
-        },
-        loadData () {
-            let page = {
-                index:this.paginations.page_index,
-                size:this.paginations.page_size,
-                name:this.search
-            }
-            this.$axios.post('/api/commodity/get',page)
-            .then(res => {
-                this.tableData = res.data.result
-                this.paginations.total = res.data.total
-            })
-            .catch(err => console.log(err))
-        },
-        addCommodity () {
-            this.dialog = {
-                show: true,
-                title: '添加商品',
-                option: 'add'
-            }
-            this.form ={
-                img:'',
-                name:'',
-                describe:'',
-                category:'',
-                price:0,
-                isDiscount:false,
-                onSale:0,
-                soldOut:false
-            }
-        },
-        editCommodity (row) {
-            this.dialog = {
-                show: true,
-                title: '编辑商品',
-                option: 'edit'
-            }
-            this.form = row
-        },
-        delCommodity (row) {
-            this.$confirm(`确认删除商品 “${row.name}” 吗？`)
-            .then(_ => {
-                this.$axios.post('/api/commodity/del',{_id:row._id})
-                .then(result=>{
-                    this.$message({
-                        type:'success',
-                        message: result.data
-                    })
-                    this.loadData()
-                })
-                .catch(err=>{
-                    console.log(err)
-                })
-            })
-            .catch(_ => {})
-        }
-    },
-    created () {
-        this.loadData()
-        window.onresize = ()=>{
-            this.tableHeight = window.innerHeight - 194
-        }
-    },
-    components: {
-        CommodityDialog
+  name: 'cmmodity',
+  data () {
+    return {
+      dialog: {
+        show: false,
+        title: '',
+        option: 'add'
+      },
+      form: {
+        img: '',
+        name: '',
+        describe: '',
+        category: '',
+        price: 0,
+        isDiscount: false,
+        onSale: 0,
+        soldOut: false
+      },
+      tableData: [],
+      tableHeight: window.innerHeight - 194,
+      categoryList: [],
+      search: '',
+      suggests: [],
+      paginations: {
+        page_index: 1,
+        total: 0,
+        page_size: 5,
+        page_sizes: [5, 10, 15, 20],
+        layout: 'total, sizes, prev, pager, next, jumper'
+      }
     }
+  },
+  methods: {
+    handleSizeChange (val) {
+      this.paginations.page_size = val
+      this.loadData()
+    },
+    handleCurrentChange (val) {
+      this.loadData()
+    },
+    loadData () {
+      const page = {
+        index: this.paginations.page_index,
+        size: this.paginations.page_size,
+        name: this.search
+      }
+      this.$axios.post('/api/commodity/get', page)
+        .then(res => {
+          this.tableData = res.data.result
+          this.paginations.total = res.data.total
+        })
+        .catch(err => console.log(err))
+    },
+    addCommodity () {
+      this.dialog = {
+        show: true,
+        title: '添加商品',
+        option: 'add'
+      }
+      this.form = {
+        img: '',
+        name: '',
+        describe: '',
+        category: '',
+        price: 0,
+        isDiscount: false,
+        onSale: 0,
+        soldOut: false
+      }
+    },
+    editCommodity (row) {
+      this.dialog = {
+        show: true,
+        title: '编辑商品',
+        option: 'edit'
+      }
+      this.form = row
+    },
+    delCommodity (row) {
+      this.$confirm(`确认删除商品 “${row.name}” 吗？`)
+        .then(_ => {
+          this.$axios.post('/api/commodity/del', { _id: row._id })
+            .then(result => {
+              this.$message({
+                type: 'success',
+                message: result.data
+              })
+              this.loadData()
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        })
+        .catch(_ => {})
+    }
+  },
+  created () {
+    this.loadData()
+    window.onresize = () => {
+      this.tableHeight = window.innerHeight - 194
+    }
+  },
+  components: {
+    CommodityDialog
+  }
 }
 </script>
 <style scoped>

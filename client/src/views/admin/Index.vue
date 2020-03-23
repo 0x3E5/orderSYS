@@ -21,15 +21,15 @@ export default {
   name: 'adminIndex',
   data () {
     return {
-        show:true
+      show: true
     }
   },
   methods: {
-      toggleLeft(){
-          this.show=!this.show
-      }
+    toggleLeft () {
+      this.show = !this.show
+    }
   },
-  mounted() {
+  mounted () {
   },
   components: {
     TopNav,
