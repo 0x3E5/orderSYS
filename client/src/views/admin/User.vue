@@ -51,11 +51,10 @@ export default {
                         })
                         this.$router.push('/login')
                     } else {
-                        // this.$axios.get('/api/users/current')
-                        //     .then(res => {
-                        //         this.$store.dispatch('setUser',res.data)
-                        //         this.form = res.data
-                        //     })
+                        this.$axios.get('/api/users/authorization')
+                            .then(res=>{
+                                localStorage.setItem('orderTk',res.data.token)
+                            })
                         this.$message({
                             type:'success',
                             message: res.data
@@ -68,7 +67,7 @@ export default {
         }
     },
     created () {
-        this.form = this.$store.getters.getUser;
+        this.form = this.$store.getters.getUser
     },
 }
 </script>

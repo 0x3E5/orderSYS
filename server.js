@@ -2,15 +2,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const passport = require('passport');
-const router = require('./routes/router');
-const users = require('./routes/api/users');
-const shop = require('./routes/api/shop');
-const init = require('./routes/api/init');
-const category = require('./routes/api/category');
-const commodity = require('./routes/api/commodity');
-const qrCode = require('./routes/api/qrCode');
-const order = require('./routes/api/order');
-const statisticData = require('./routes/api/statisticData');
 
 // 设置WebSocket
 const http = require('http').Server(app);
@@ -29,15 +20,14 @@ mongoose.connect(db,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModi
 app.use(express.static('./public'));
 
 // 应用路由
-app.use(router);
-app.use('/api/users',users);
-app.use('/api/shop',shop);
-app.use('/api/init',init);
-app.use('/api/category',category);
-app.use('/api/commodity',commodity);
-app.use('/api/qrcode',qrCode);
-app.use('/api/order',order);
-app.use('/api/statistic',statisticData);
+app.use('/api/users',require('./routes/api/users'));
+app.use('/api/shop',require('./routes/api/shop'));
+app.use('/api/init',require('./routes/api/init'));
+app.use('/api/category',require('./routes/api/category'));
+app.use('/api/commodity',require('./routes/api/commodity'));
+app.use('/api/qrcode',require('./routes/api/qrCode'));
+app.use('/api/order',require('./routes/api/order'));
+app.use('/api/statistic',require('./routes/api/statisticData'));
 
 // 初始化Passport
 app.use(passport.initialize());

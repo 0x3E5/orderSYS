@@ -59,7 +59,7 @@ router.post('/login',async (req,res)=>{
         const isMatch = bcrypt.compareSync(password,user.password);
         if(isMatch){
             const rules = {id:user.id,username:user.username,email:user.email,avatar:user.avatar};
-            jwt.sign(rules,secretKey,{expiresIn:1800},(err,token)=>{
+            jwt.sign(rules,secretKey,{expiresIn:36000},(err,token)=>{
                 if(err) throw err;
                 res.json({success:true,token:"Bearer "+token});
             })
@@ -74,11 +74,11 @@ router.post('/login',async (req,res)=>{
 // $route GET api/users/authorization
 // @desc 单独获取token，返回json数据
 // @access private
-router.post('/authorization',passport.authenticate('jwt',{session:false}),async (req,res)=>{
+router.get('/authorization',passport.authenticate('jwt',{session:false}),async (req,res)=>{
     try{
         const user = await User.findOne({_id:req.user.id}).exec();
         const rules = {id:user.id,username:user.username,email:user.email,avatar:user.avatar};
-        jwt.sign(rules,secretKey,{expiresIn:1800},(err,token)=>{
+        jwt.sign(rules,secretKey,{expiresIn:36000},(err,token)=>{
             if(err) throw err;
             res.json({success:true,token:"Bearer "+token});
         })
@@ -86,18 +86,6 @@ router.post('/authorization',passport.authenticate('jwt',{session:false}),async 
         console.log(err);
     }
 });
-
-// $route GET api/users/current
-// @desc 获取管理员信息，返回json数据
-// @access private
-router.get('/current',passport.authenticate('jwt',{session:false}),(req,res)=>{
-    res.json({
-        id:req.user.id,
-        username:req.user.username,
-        email:req.user.email,
-        avatar:req.user.avatar
-    });
-})
 
 // $route POST api/users/chinfo
 // @desc 修改管理员信息，返回json数据
@@ -127,7 +115,7 @@ router.post('/chinfo',passport.authenticate('jwt',{session:false}),async (req,re
             }
         }else{
             chUser.avatar = gravatar.url(chUser.email,{s:'200',r:'pg',d:'mm'});
-            const update = await User.findOneAndUpdate({_id:chUser.id},{$set:chUser}).exec();
+            const update = await User.findOneAndUpdate({_id:chUser.id},{$set:{username:chUser.username,email:chUser.email,avatar:chUser.avatar}}).exec();
             if(update){
                 res.send('信息修改成功！');
             }
