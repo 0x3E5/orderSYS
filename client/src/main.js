@@ -14,7 +14,7 @@ import 'echarts/lib/component/dataZoom'
 Vue.component('chart', ECharts)
 
 Vue.use(new VueSocketIO({
-  debug:true,
+  debug:false,
   connection:'http://localhost:3000',
   vuex:{
     

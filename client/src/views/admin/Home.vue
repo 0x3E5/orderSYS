@@ -184,7 +184,9 @@ export default {
         this.initCard()
         let erd = elementResizeDetectorMaker();
         erd.listenTo(this.$refs.panel,  (element) => {
-            this.$refs.chart.resize()
+            if(this.$refs.chart){
+                this.$refs.chart.resize()
+            }
         })
     }
 }

@@ -1,11 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import NotFound from '../views/404.vue'
-import Init from '../views/init/Init'
-import InitAdmin from '../views/init/Admin'
-import Shop from '../views/init/Shop.vue'
-import Complete from '../views/init/Complete.vue'
-import Admin from '../views/admin/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +13,7 @@ const routes = [
   },
   {
     path: '/init',
-    component: Init,
+    component: ()=>import('../views/init/Init'),
     meta: {
       title: '系统初始化'
     },
@@ -29,12 +23,12 @@ const routes = [
         meta: {
           title: '初始化管理员',
         },
-        component: InitAdmin
+        component: ()=>import('../views/init/Admin')
       },
       {
         path: '/init/admin',
         name: 'RegAdmin',
-        component: InitAdmin,
+        component: ()=>import('../views/init/Admin'),
         meta: {
           title: '初始化管理员'
         }
@@ -42,7 +36,7 @@ const routes = [
       {
         path: '/init/shop',
         name: 'SetShop',
-        component: Shop,
+        component: ()=>import('../views/init/Shop'),
         meta: {
           title: '设置店铺信息'
         }
@@ -50,7 +44,7 @@ const routes = [
       {
         path: '/init/complete',
         name: 'Complete',
-        component: Complete,
+        component: ()=>import('../views/init/Complete'),
         meta: {
           title: '初始化完成'
         }
@@ -67,14 +61,14 @@ const routes = [
   },
   {
     path: '/admin',
-    component: Admin,
+    component: ()=>import('../views/admin/Index'),
     children: [
       {
         path: '',
         meta: {
           title: '首页'
         },
-        component: () => import('../views/admin/Home.vue')
+        component: () => import('../views/admin/Home')
       },
       {
         path: '/admin/home',
@@ -82,7 +76,7 @@ const routes = [
         meta: {
           title: '首页'
         },
-        component: () => import('../views/admin/Home.vue')
+        component: () => import('../views/admin/Home')
       },
       {
         path: '/admin/order',
@@ -90,7 +84,7 @@ const routes = [
         meta: {
           title: '订单管理'
         },
-        component: () => import('../views/admin/Order.vue')
+        component: () => import('../views/admin/Order')
       },
       {
         path: '/admin/history',
@@ -98,7 +92,7 @@ const routes = [
         meta: {
           title: '历史订单'
         },
-        component: () => import('../views/admin/History.vue')
+        component: () => import('../views/admin/History')
       },
       {
         path: '/admin/category',
@@ -106,7 +100,7 @@ const routes = [
         meta: {
           title: '分类管理'
         },
-        component: () => import('../views/admin/Category.vue')
+        component: () => import('../views/admin/Category')
       },
       {
         path: '/admin/commodity',
@@ -114,7 +108,7 @@ const routes = [
         meta: {
           title: '商品管理'
         },
-        component: () => import('../views/admin/Commodity.vue')
+        component: () => import('../views/admin/Commodity')
       },
       {
         path: '/admin/qrcode',
@@ -122,7 +116,7 @@ const routes = [
         meta: {
           title: '点餐码管理'
         },
-        component: () => import('../views/admin/QRCode.vue')
+        component: () => import('../views/admin/QRCode')
       },
       {
         path: '/admin/shop',
@@ -130,7 +124,7 @@ const routes = [
         meta: {
           title: '店铺信息'
         },
-        component: () => import('../views/admin/Shop.vue')
+        component: () => import('../views/admin/Shop')
       },
       {
         path: '/admin/user',
@@ -138,7 +132,15 @@ const routes = [
         meta: {
           title: '个人信息'
         },
-        component: () => import('../views/admin/User.vue')
+        component: () => import('../views/admin/User')
+      },
+      {
+        path: '/admin/*',
+        name: 'AdminNotFount',
+        meta: {
+          title: '出错了'
+        },
+        component: () => import('../views/404')
       }
     ]
   },
@@ -149,15 +151,15 @@ const routes = [
     meta: {
       title: '在线点餐'
     },
-    component: () => import('../views/user/Index.vue')
+    component: () => import('../views/user/Index')
   },
   {
     path: '/*',
     name: 'NotFound',
     meta: {
-      title: 'NotFound'
+      title: '出错了'
     },
-    component: NotFound
+    component: ()=>import('../views/404')
   }
 ]
 
