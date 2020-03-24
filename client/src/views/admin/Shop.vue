@@ -58,7 +58,7 @@ export default {
       rules: {
         shopName: [
           { required: true, message: '店铺名称不能为空！', trigger: 'blur' },
-          { min: 2, max: 16, message: '长度在2到16个字符之间！', trigger: 'blur' }
+          { min: 2, max: 18, message: '长度在2到18个字符之间！', trigger: 'blur' }
         ],
         shopIntro: [
           { required: true, message: '店铺简介不能为空！', trigger: 'blur' },
