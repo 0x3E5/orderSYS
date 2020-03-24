@@ -39,7 +39,7 @@ export default {
       items: [
         {
           icon: 'el-icon-odometer',
-          name: '首页',
+          name: '运营统计',
           path: '/admin/home',
           isGroup: false
         },
