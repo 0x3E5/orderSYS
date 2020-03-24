@@ -18,7 +18,7 @@
                 <el-input v-model="form.name" autocomplete="off" placeholder="请输入商品名称"></el-input>
             </el-form-item>
             <el-form-item label="商品描述" prop="describe" :label-width="formLabelWidth">
-                <el-input type="textarea" maxlength="50" :autosize="{ minRows: 4, maxRows: 4 }" show-word-limit v-model.number="form.describe" autocomplete="off" placeholder="请输入商品描述"></el-input>
+                <el-input type="textarea" maxlength="200" :autosize="{ minRows: 4, maxRows: 4 }" show-word-limit v-model.number="form.describe" autocomplete="off" placeholder="请输入商品描述"></el-input>
             </el-form-item>
             <el-form-item label="商品分类" prop="category" :label-width="formLabelWidth">
                 <el-select v-model="form.category" placeholder="请选择">
