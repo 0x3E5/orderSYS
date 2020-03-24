@@ -28,7 +28,7 @@
                             <li class="food" v-for="(food,index) in selectFoods" :key="index">
                                 <span class="name">{{food.name}}</span>
                                 <div class="price">
-                                    <span>¥{{food.price*food.count}}</span>
+                                    <span>¥{{Math.round((food.price * food.count) * 100) / 100}}</span>
                                 </div>
                                 <div class="cartcontrol-wrapper">
                                     <CartControl :food="food"></CartControl>
