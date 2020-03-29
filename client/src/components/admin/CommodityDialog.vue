@@ -2,7 +2,7 @@
     <div id="category-dialog">
         <el-dialog :title="dialog.title" :visible.sync="dialog.show" width="30%">
         <el-form ref="form" :model="form" :rules="form_rules">
-            <el-form-item label="店铺图片" :label-width="formLabelWidth">
+            <el-form-item label="商品图片" :label-width="formLabelWidth">
                 <el-upload
                 class="commodity-uploader"
                 action=""

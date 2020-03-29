@@ -15,7 +15,7 @@ Vue.component('chart', ECharts)
 
 Vue.use(new VueSocketIO({
   debug: false,
-  connection: 'http://shop.1024s.cn:3000',
+  connection: 'http://localhost:3000',
   vuex: {
 
   }
