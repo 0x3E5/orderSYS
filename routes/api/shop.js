@@ -59,6 +59,7 @@ router.post('/create', async (req, res) => {
 // @access public
 router.post('/upload', (req, res) => {
   let form = new formidable.IncomingForm()
+  form.uploadDir='public/shop'
   form.parse(req, (err, fields, files) => {
     fs.rename(
       files.file.path,

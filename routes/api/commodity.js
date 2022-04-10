@@ -85,6 +85,7 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     let form = new formidable.IncomingForm()
+    form.uploadDir='public/goods'
     form.parse(req, (err, fields, files) => {
       fs.rename(
         files.file.path,
