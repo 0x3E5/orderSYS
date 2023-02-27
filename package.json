@@ -23,7 +23,7 @@
   "homepage": "https://github.com/0x3E5/orderSYS#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "formidable": "^1.2.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
